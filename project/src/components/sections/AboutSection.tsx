@@ -34,14 +34,6 @@ const AboutSection: React.FC = () => {
           <div className="space-y-4">
             <p className="text-gray-200 leading-relaxed">{bio}</p>
             
-            <div className="pt-4">
-              <a 
-                href="#contact" 
-                className="inline-block bg-omnitrix-green-500 hover:bg-omnitrix-green-600 text-black font-bold py-2 px-6 rounded-lg transition-colors duration-300 shadow-md"
-              >
-                Get In Touch
-              </a>
-            </div>
           </div>
         </div>
       </div>
