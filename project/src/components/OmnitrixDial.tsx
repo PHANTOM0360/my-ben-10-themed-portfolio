@@ -5,10 +5,10 @@ import { sectionIcons } from '../data/sectionIcons';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { SectionType } from '../types';
 
-const ACTIVATION_SOUND_URL = '/src/sounds/open sound.mp3';
-const ROTATION_SOUND_URL = '/src/sounds/rotation sound.mp3';
-const SELECTION_SOUND_URL = '/src/sounds/activate sound.mp3';
-const BACKGROUND_MUSIC_URL = '/src/sounds/background music.mp3';
+const ACTIVATION_SOUND_URL = '/sounds/open sound.mp3';
+const ROTATION_SOUND_URL = '/sounds/rotation sound.mp3';
+const SELECTION_SOUND_URL = '/sounds/activate sound.mp3';
+const BACKGROUND_MUSIC_URL = '/sounds/background music.mp3';
 
 interface OmnitrixDialProps {
   onSectionChange: (section: SectionType) => void;

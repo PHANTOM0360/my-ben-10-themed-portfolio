@@ -53,7 +53,7 @@ function App() {
       <header className="w-full py-6 px-4 text-center relative z-10">
         <div className="max-w-[600px] mx-auto">
           <img 
-            src="/src/images/ARKAPRAVA-CHOWDHURY-4-24-2025.png" 
+            src="/images/ARKAPRAVA-CHOWDHURY-4-24-2025.png" 
             alt="Arkaprava Chowdhury" 
             className="w-full h-auto"
             style={{ filter: 'drop-shadow(0 0 10px rgba(20, 219, 0, 0.7))' }}
