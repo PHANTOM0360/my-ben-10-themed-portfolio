@@ -34,7 +34,7 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
   const [playRotation] = useSound(ROTATION_SOUND_URL, { volume: 0.4 });
   const [playSelection] = useSound(SELECTION_SOUND_URL, { volume: 0.5 });
   const [playBackgroundMusic, { stop: stopBackgroundMusic }] = useSound(BACKGROUND_MUSIC_URL, { 
-    volume: 0.1,
+    volume: 0.2,
     loop: true,
     playbackRate: 1
   });
