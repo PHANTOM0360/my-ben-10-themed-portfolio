@@ -283,3 +283,34 @@ body {
   100% { clip: rect(24px, 550px, 90px, 0); }
 }
 
+@keyframes redGlowPulse {
+  0% {
+    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.6);
+  }
+}
+
+@keyframes blinkPulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-red-glow-pulse {
+  animation: redGlowPulse 1.5s infinite;
+}
+
+.animate-blink-pulse {
+  animation: blinkPulse 0.4s infinite;
+}

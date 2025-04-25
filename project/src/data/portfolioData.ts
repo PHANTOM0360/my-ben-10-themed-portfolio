@@ -6,7 +6,8 @@ export const portfolioData: PortfolioData = {
     name: 'Arkaprava Chowdhury',
     title: 'Web Developer & Designer',
     bio: 'I am a creative developer skilled in building sleek, responsive web apps with React, JavaScript, and Tailwind. I blend design and code, backed by experience in Node.js, Python, and tools like Figma and Framer. I love crafting clean interfaces and smooth user experiences.',
-    imageUrl: '/images/profile.png'
+    imageUrl: '/images/profile.png',
+    resumeUrl: '/files/arkaprava_chowdhury_resume.pdf', // Add your resume file path here
   },
   projects: [
     {
@@ -68,11 +69,10 @@ export const portfolioData: PortfolioData = {
         { name: 'Digital Art', level: 9 },
       ]
     }
-
   ],
   contact: {
     email: 'arkaprava2099@gmail.com',
-    location: '95 Health Institute Road, Dum Dum, Kolkata-700065',
+    location: 'Kolkata, West Bengal',
     socials: [
       { name: 'GitHub', url: 'https://github.com/PHANTOM0360', icon: 'github' },
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/arkaprava-chowdhury-449918220/', icon: 'linkedin' },

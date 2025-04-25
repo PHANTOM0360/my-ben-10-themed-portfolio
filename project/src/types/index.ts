@@ -13,6 +13,7 @@ export interface PortfolioData {
     title: string;
     bio: string;
     imageUrl?: string;
+    resumeUrl?: string;
   };
   projects: {
     id: string;

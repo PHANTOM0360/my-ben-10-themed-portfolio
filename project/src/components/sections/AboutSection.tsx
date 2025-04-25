@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../../data/portfolioData';
+import { Download } from 'lucide-react';
 
 const AboutSection: React.FC = () => {
-  const { name, title, bio, imageUrl } = portfolioData.about;
+  const { name, title, bio, imageUrl, resumeUrl } = portfolioData.about;
 
   return (
     <motion.div 
@@ -34,6 +35,18 @@ const AboutSection: React.FC = () => {
           <div className="space-y-4">
             <p className="text-gray-200 leading-relaxed">{bio}</p>
             
+            {resumeUrl && (
+              <motion.a
+                href={resumeUrl}
+                download
+                className="inline-flex items-center px-4 py-2 mt-4 bg-omnitrix-green-500 hover:bg-omnitrix-green-600 text-white font-medium rounded-lg transition-colors duration-200"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Download className="mr-2 h-5 w-5" />
+                Download Resume
+              </motion.a>
+            )}
           </div>
         </div>
       </div>
