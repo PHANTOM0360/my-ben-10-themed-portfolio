@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme Variables */
 :root {
+  /* Ben Theme Colors */
   --omnitrix-green: #14DB00;
   --dark-green: #0A6B00;
+  --ben-green: #00FF41;
+  --ben-green-dark: #008F20;
+  --ben-green-light: #7DFFB3;
+  --ben-black: #1A1A1A;
+  --ben-gray: #333333;
+  
+  /* Gwen Theme Colors */
+  --gwen-pink: #FF45A0;
+  --gwen-pink-dark: #B8007A;
+  --gwen-pink-light: #FF82C3;
+  --gwen-purple: #9C27B0;
+  --gwen-magenta: #D81B60;
+  
+  /* Shared Colors */
   --black: #000000;
 }
 
@@ -14,7 +30,44 @@ body {
   font-family: 'Rajdhani', 'Orbitron', sans-serif;
 }
 
-/* Glitch effect */
+/* ===== THEME TRANSITION EFFECTS ===== */
+
+/* Shared transition ripple effect */
+.theme-activation-ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1), 
+              height 1.5s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 1.5s ease;
+}
+
+/* Ben-to-Gwen transition (pink ripple) */
+.theme-activation-ripple.gwen {
+  background: radial-gradient(circle, var(--gwen-pink) 0%, rgba(255, 69, 160, 0) 70%);
+}
+
+/* Gwen-to-Ben transition (green ripple) */
+.theme-activation-ripple.ben {
+  background: radial-gradient(circle, var(--omnitrix-green) 0%, rgba(20, 219, 0, 0) 70%);
+}
+
+.theme-activation-ripple.active {
+  width: 300vw;
+  height: 300vw;
+  opacity: 1;
+}
+
+/* ===== BEN THEME STYLES ===== */
+
+/* Ben's glitch background */
 .glitch-container {
   position: fixed;
   top: 0;
@@ -77,7 +130,40 @@ body {
   animation: flicker 8s infinite;
 }
 
-/* Text Glitch Effect */
+/* Ben's Energy particles */
+.ben-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: var(--ben-green-light);
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px var(--ben-green);
+  opacity: 0;
+  animation: ben-particle-float 10s infinite ease-in-out;
+}
+
+.ben-energy-particles {
+  position: absolute;
+  inset: -50%;
+  transform: scale(0.5);
+}
+
+/* Ben's Omnitrix swirls */
+.ben-omnitrix-swirl {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 255, 65, 0.3);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: ben-float 15s infinite linear;
+}
+
+.ben-omnitrix-swirl:nth-child(1) { width: 300px; height: 300px; top: 10%; left: 10%; opacity: 0.3; animation-delay: 0s; }
+.ben-omnitrix-swirl:nth-child(2) { width: 200px; height: 200px; top: 40%; left: 80%; opacity: 0.2; animation-delay: 2s; }
+.ben-omnitrix-swirl:nth-child(3) { width: 250px; height: 250px; top: 70%; left: 30%; opacity: 0.25; animation-delay: 4s; }
+.ben-omnitrix-swirl:nth-child(4) { width: 180px; height: 180px; top: 20%; left: 60%; opacity: 0.15; animation-delay: 6s; }
+
+/* Ben Text Glitch Effect */
 .glitch-text {
   position: relative;
   animation: text-glitch 3s infinite;
@@ -119,7 +205,184 @@ body {
   filter: brightness(1.5);
 }
 
-/* Animations */
+/* Customize scrollbar for Ben theme */
+.ben-theme ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ben-theme ::-webkit-scrollbar-track {
+  background: #001500;
+}
+
+.ben-theme ::-webkit-scrollbar-thumb {
+  background: var(--ben-green);
+  border-radius: 4px;
+}
+
+.ben-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--ben-green-light);
+}
+
+/* Generate Ben omnitrix particles */
+.ben-theme::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background-image: 
+    radial-gradient(circle at 20% 30%, var(--ben-green-light) 1px, transparent 1px),
+    radial-gradient(circle at 70% 65%, var(--ben-green-light) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, var(--ben-green-light) 1px, transparent 1px),
+    radial-gradient(circle at 80% 10%, var(--ben-green-light) 1px, transparent 1px);
+  background-size: 180px 180px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  animation: ben-sparkle 10s infinite linear;
+  opacity: 0.3;
+}
+
+/* ===== GWEN THEME STYLES ===== */
+
+/* Gwen's energy background */
+.gwen-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #270032, #000000, #270032);
+}
+
+.gwen-energy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background: radial-gradient(circle at center, rgba(255, 69, 160, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+  transition: opacity 1.5s ease;
+}
+
+.gwen-energy.active {
+  opacity: 1;
+}
+
+/* Mana swirls */
+.gwen-mana-swirl {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 69, 160, 0.3);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: gwen-float 15s infinite linear;
+}
+
+.gwen-mana-swirl:nth-child(1) { width: 300px; height: 300px; top: 10%; left: 10%; opacity: 0.3; animation-delay: 0s; }
+.gwen-mana-swirl:nth-child(2) { width: 200px; height: 200px; top: 40%; left: 80%; opacity: 0.2; animation-delay: 2s; }
+.gwen-mana-swirl:nth-child(3) { width: 250px; height: 250px; top: 70%; left: 30%; opacity: 0.25; animation-delay: 4s; }
+.gwen-mana-swirl:nth-child(4) { width: 180px; height: 180px; top: 20%; left: 60%; opacity: 0.15; animation-delay: 6s; }
+
+/* Energy particles */
+.gwen-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: var(--gwen-pink-light);
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px var(--gwen-pink);
+  opacity: 0;
+  animation: gwen-particle-float 10s infinite ease-in-out;
+}
+
+.gwen-energy-particles {
+  position: absolute;
+  inset: -50%;
+  transform: scale(0.5);
+}
+
+/* Text effects for Gwen theme */
+.gwen-text {
+  text-shadow: 0 0 8px var(--gwen-pink), 0 0 12px var(--gwen-pink-light);
+  transition: text-shadow 0.5s ease;
+}
+
+.gwen-card {
+  box-shadow: 0 0 12px var(--gwen-pink), inset 0 0 8px var(--gwen-pink) !important;
+  border-color: var(--gwen-pink-light) !important;
+  transition: box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+/* Shadow for Gwen elements */
+.shadow-gwen-glow {
+  box-shadow: 0 0 15px var(--gwen-pink), 0 0 30px var(--gwen-pink);
+  filter: brightness(1.2);
+  transition: all 0.3s ease;
+}
+
+.shadow-gwen-glow:hover {
+  box-shadow: 0 0 25px var(--gwen-pink), 0 0 50px var(--gwen-pink);
+  filter: brightness(1.5);
+}
+
+/* Customize scrollbar for Gwen theme */
+.gwen-theme ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gwen-theme ::-webkit-scrollbar-track {
+  background: #270032;
+}
+
+.gwen-theme ::-webkit-scrollbar-thumb {
+  background: var(--gwen-pink);
+  border-radius: 4px;
+}
+
+.gwen-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--gwen-pink-light);
+}
+
+/* Generate Gwen mana particles */
+.gwen-theme::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background-image: 
+    radial-gradient(circle at 20% 30%, var(--gwen-pink-light) 1px, transparent 1px),
+    radial-gradient(circle at 70% 65%, var(--gwen-pink-light) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, var(--gwen-pink-light) 1px, transparent 1px),
+    radial-gradient(circle at 80% 10%, var(--gwen-pink-light) 1px, transparent 1px);
+  background-size: 180px 180px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  animation: gwen-sparkle 10s infinite linear;
+  opacity: 0.3;
+}
+
+/* ===== OTHER SHARED EFFECTS ===== */
+
+.animate-red-glow-pulse {
+  animation: redGlowPulse 1.5s infinite;
+}
+
+.animate-blink-pulse {
+  animation: blinkPulse 0.4s infinite;
+}
+
+/* ===== ANIMATIONS ===== */
+
+/* Ben Theme Animations */
 @keyframes glitch-line {
   0% { opacity: 0; transform: translateX(-100%); }
   10% { opacity: 0.8; }
@@ -148,6 +411,25 @@ body {
   90.1% { opacity: 0.01; }
   90.2% { opacity: 0; }
   100% { opacity: 0; }
+}
+
+@keyframes ben-float {
+  0% { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+  33% { transform: translateX(30px) translateY(-20px) rotate(120deg) scale(1.1); }
+  66% { transform: translateX(-20px) translateY(30px) rotate(240deg) scale(0.9); }
+  100% { transform: translateX(0) translateY(0) rotate(360deg) scale(1); }
+}
+
+@keyframes ben-particle-float {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+}
+
+@keyframes ben-sparkle {
+  0% { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px; }
+  100% { background-position: 180px 180px, 220px 240px, 310px 450px, 250px 280px; }
 }
 
 @keyframes text-glitch {
@@ -244,73 +526,327 @@ body {
   90% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
   91% { text-shadow: 60px 0 0 var(--omnitrix-green), -60px 0 0 var(--dark-green); }
   92% { text-shadow: 0 0 0 var(--omnitrix-green), 0 0 0 var(--dark-green); }
-  92% { text-shadow: 0.7px 0 0 var(--omnitrix-green), -0.7px 0 0 var(--dark-green); }
-  93% { text-shadow: 0.7px 0 0 var(--omnitrix-green), -0.7px 0 0 var(--dark-green); }
-  94% { text-shadow: 0.7px 0 0 var(--omnitrix-green), -0.7px 0 0 var(--dark-green); }
-  95% { text-shadow: 0.7px 0 0 var(--omnitrix-green), -0.7px 0 0 var(--dark-green); }
-  96% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
-  97% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
-  98% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
-  99% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
-  100% { text-shadow: -1px 0 0 var(--omnitrix-green), 1px 0 0 var(--dark-green); }
+  93% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  94% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  95% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  96% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  97% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  98% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  99% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
+  100% { text-shadow: 0.5px 0 0 var(--omnitrix-green), -0.5px 0 0 var(--dark-green); }
 }
 
+/* Missing keyframe animations for the glitch effects */
 @keyframes glitch-anim-1 {
-  0% { clip: rect(24px, 550px, 90px, 0); }
-  10% { clip: rect(43px, 550px, 45px, 0); }
-  20% { clip: rect(13px, 550px, 89px, 0); }
-  30% { clip: rect(95px, 550px, 11px, 0); }
-  40% { clip: rect(70px, 550px, 90px, 0); }
-  50% { clip: rect(30px, 550px, 34px, 0); }
-  60% { clip: rect(53px, 550px, 12px, 0); }
-  70% { clip: rect(87px, 550px, 5px, 0); }
-  80% { clip: rect(42px, 550px, 78px, 0); }
-  90% { clip: rect(21px, 550px, 67px, 0); }
-  100% { clip: rect(24px, 550px, 90px, 0); }
+  0% { clip: rect(44px, 9999px, 60px, 0); }
+  5% { clip: rect(19px, 9999px, 37px, 0); }
+  10% { clip: rect(11px, 9999px, 13px, 0); }
+  15% { clip: rect(35px, 9999px, 5px, 0); }
+  20% { clip: rect(87px, 9999px, 36px, 0); }
+  25% { clip: rect(56px, 9999px, 7px, 0); }
+  30% { clip: rect(79px, 9999px, 42px, 0); }
+  35% { clip: rect(25px, 9999px, 5px, 0); }
+  40% { clip: rect(50px, 9999px, 22px, 0); }
+  45% { clip: rect(40px, 9999px, 98px, 0); }
+  50% { clip: rect(45px, 9999px, 65px, 0); }
+  55% { clip: rect(51px, 9999px, 69px, 0); }
+  60% { clip: rect(24px, 9999px, 14px, 0); }
+  65% { clip: rect(85px, 9999px, 4px, 0); }
+  70% { clip: rect(13px, 9999px, 55px, 0); }
+  75% { clip: rect(87px, 9999px, 77px, 0); }
+  80% { clip: rect(68px, 9999px, 15px, 0); }
+  85% { clip: rect(51px, 9999px, 71px, 0); }
+  90% { clip: rect(32px, 9999px, 43px, 0); }
+  95% { clip: rect(60px, 9999px, 9px, 0); }
+  100% { clip: rect(24px, 9999px, 90px, 0); }
 }
 
 @keyframes glitch-anim-2 {
-  0% { clip: rect(24px, 550px, 90px, 0); }
-  10% { clip: rect(43px, 550px, 45px, 0); }
-  20% { clip: rect(13px, 550px, 89px, 0); }
-  30% { clip: rect(95px, 550px, 11px, 0); }
-  40% { clip: rect(70px, 550px, 90px, 0); }
-  50% { clip: rect(30px, 550px, 34px, 0); }
-  60% { clip: rect(53px, 550px, 12px, 0); }
-  70% { clip: rect(87px, 550px, 5px, 0); }
-  80% { clip: rect(42px, 550px, 78px, 0); }
-  90% { clip: rect(21px, 550px, 67px, 0); }
-  100% { clip: rect(24px, 550px, 90px, 0); }
+  0% { clip: rect(85px, 9999px, 46px, 0); }
+  5% { clip: rect(25px, 9999px, 31px, 0); }
+  10% { clip: rect(56px, 9999px, 92px, 0); }
+  15% { clip: rect(38px, 9999px, 64px, 0); }
+  20% { clip: rect(40px, 9999px, 55px, 0); }
+  25% { clip: rect(75px, 9999px, 3px, 0); }
+  30% { clip: rect(31px, 9999px, 21px, 0); }
+  35% { clip: rect(43px, 9999px, 58px, 0); }
+  40% { clip: rect(85px, 9999px, 69px, 0); }
+  45% { clip: rect(11px, 9999px, 32px, 0); }
+  50% { clip: rect(28px, 9999px, 40px, 0); }
+  55% { clip: rect(79px, 9999px, 44px, 0); }
+  60% { clip: rect(7px, 9999px, 65px, 0); }
+  65% { clip: rect(20px, 9999px, 99px, 0); }
+  70% { clip: rect(36px, 9999px, 42px, 0); }
+  75% { clip: rect(59px, 9999px, 2px, 0); }
+  80% { clip: rect(77px, 9999px, 20px, 0); }
+  85% { clip: rect(89px, 9999px, 73px, 0); }
+  90% { clip: rect(30px, 9999px, 67px, 0); }
+  95% { clip: rect(56px, 9999px, 18px, 0); }
+  100% { clip: rect(85px, 9999px, 140px, 0); }
 }
 
+/* Gwen Theme Animations */
+@keyframes gwen-float {
+  0% { transform: translateX(0) translateY(0) rotate(0deg) scale(1); }
+  33% { transform: translateX(30px) translateY(-20px) rotate(120deg) scale(1.1); }
+  66% { transform: translateX(-20px) translateY(30px) rotate(240deg) scale(0.9); }
+  100% { transform: translateX(0) translateY(0) rotate(360deg) scale(1); }
+}
+
+@keyframes gwen-particle-float {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.2; }
+  100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+}
+
+@keyframes gwen-sparkle {
+  0% { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px; }
+  100% { background-position: 180px 180px, 220px 240px, 310px 450px, 250px 280px; }
+}
+
+/* Shared Animation Effects */
 @keyframes redGlowPulse {
-  0% {
-    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.8);
-  }
-  100% {
-    box-shadow: 0 0 5px 2px rgba(255, 0, 0, 0.6);
-  }
+  0% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
+  100% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
 }
 
 @keyframes blinkPulse {
-  0% {
-    opacity: 1;
+  0% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Custom Button Styles */
+.btn-ben {
+  background-color: var(--ben-green-dark);
+  color: var(--ben-green-light);
+  border: 2px solid var(--ben-green);
+  transition: all 0.3s ease;
+}
+
+.btn-ben:hover {
+  background-color: var(--ben-green);
+  color: var(--ben-black);
+  box-shadow: 0 0 15px var(--ben-green), 0 0 30px var(--ben-green);
+}
+
+.btn-gwen {
+  background-color: var(--gwen-pink-dark);
+  color: white;
+  border: 2px solid var(--gwen-pink);
+  transition: all 0.3s ease;
+}
+
+.btn-gwen:hover {
+  background-color: var(--gwen-pink);
+  color: white;
+  box-shadow: 0 0 15px var(--gwen-pink), 0 0 30px var(--gwen-pink);
+}
+
+/* Theme Switch Toggle Button */
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ben-green-dark);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.theme-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--ben-green);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .theme-switch-slider {
+  background-color: var(--gwen-pink-dark);
+}
+
+input:checked + .theme-switch-slider:before {
+  transform: translateX(26px);
+  background-color: var(--gwen-pink);
+}
+
+/* Custom Card Styles */
+.ben-card {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--ben-green);
+  box-shadow: 0 0 12px var(--omnitrix-green), inset 0 0 8px var(--omnitrix-green);
+  transition: all 0.3s ease;
+}
+
+.ben-card:hover {
+  box-shadow: 0 0 20px var(--omnitrix-green), inset 0 0 15px var(--omnitrix-green);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .ben-omnitrix-swirl,
+  .gwen-mana-swirl {
+    transform: scale(0.7);
   }
-  50% {
-    opacity: 0.3;
+  
+  .ben-omnitrix-swirl:nth-child(2),
+  .gwen-mana-swirl:nth-child(2) {
+    display: none;
   }
-  100% {
-    opacity: 1;
+  
+  .glitch-text {
+    font-size: 1.5rem !important;
   }
 }
 
-.animate-red-glow-pulse {
-  animation: redGlowPulse 1.5s infinite;
+@media (max-width: 480px) {
+  .ben-omnitrix-swirl:nth-child(3),
+  .gwen-mana-swirl:nth-child(3) {
+    display: none;
+  }
+  
+  .ben-theme::before,
+  .gwen-theme::before {
+    opacity: 0.2;
+  }
+  
+  .glitch-line:nth-child(3),
+  .glitch-line:nth-child(4) {
+    display: none;
+  }
 }
 
-.animate-blink-pulse {
-  animation: blinkPulse 0.4s infinite;
+/* Accessibility features */
+@media (prefers-reduced-motion) {
+  .theme-activation-ripple,
+  .glitch-line,
+  .glitch-scanline,
+  .glitch-flicker,
+  .ben-particle,
+  .gwen-particle,
+  .ben-omnitrix-swirl,
+  .gwen-mana-swirl,
+  .glitch-text::before,
+  .glitch-text::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .ben-theme::before,
+  .gwen-theme::before {
+    animation: none !important;
+  }
+}
+
+/* Special effects for interactive elements */
+.interactive-element {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.ben-theme .interactive-element:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) drop-shadow(0 0 10px var(--ben-green));
+}
+
+.gwen-theme .interactive-element:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) drop-shadow(0 0 10px var(--gwen-pink));
+}
+
+/* Transformation effect classes */
+.transform-effect {
+  transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.transform-active {
+  transform: rotate(360deg) scale(1.2);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.ben-theme .loading-spinner {
+  border: 4px solid rgba(20, 219, 0, 0.2);
+  border-top: 4px solid var(--ben-green);
+  animation: spin 1s linear infinite;
+}
+
+.gwen-theme .loading-spinner {
+  border: 4px solid rgba(255, 69, 160, 0.2);
+  border-top: 4px solid var(--gwen-pink);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Utility classes for text effects */
+.text-outline-ben {
+  -webkit-text-stroke: 1px var(--ben-green);
+  text-stroke: 1px var(--ben-green);
+  color: transparent;
+}
+
+.text-outline-gwen {
+  -webkit-text-stroke: 1px var(--gwen-pink);
+  text-stroke: 1px var(--gwen-pink);
+  color: transparent;
+}
+
+/* Form input styling */
+.input-ben {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--ben-green-dark);
+  color: var(--ben-green-light);
+  transition: all 0.3s ease;
+}
+
+.input-ben:focus {
+  border-color: var(--ben-green);
+  box-shadow: 0 0 10px var(--ben-green);
+  outline: none;
+}
+
+.input-gwen {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--gwen-pink-dark);
+  color: var(--gwen-pink-light);
+  transition: all 0.3s ease;
+}
+
+.input-gwen:focus {
+  border-color: var(--gwen-pink);
+  box-shadow: 0 0 10px var(--gwen-pink);
+  outline: none;
 }
