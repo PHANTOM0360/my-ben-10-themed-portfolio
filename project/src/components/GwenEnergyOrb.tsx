@@ -77,10 +77,7 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
   }, [isActive, isSlammed]);
 
   const handleActivation = () => {
-    // Always play the activation sound when the orb is clicked
-    playActivation();
-    
-    // If currently in slammed state, deactivate
+    // If currently in slammed state, deactivate immediately
     if (isSlammed) {
       setIsSlammed(false);
       onActivation(false);
@@ -90,6 +87,7 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     }
     
     // Normal activation logic
+    playActivation();
     const newState = !isActive;
     
     if (!newState) {

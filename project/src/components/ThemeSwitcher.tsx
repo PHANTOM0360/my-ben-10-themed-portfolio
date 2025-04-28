@@ -18,13 +18,13 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
   
   // Sound effects
   const playGwenActivation = () => {
-    const sound = new Audio('/sounds/gwen-activation.wav');
+    const sound = new Audio('/sounds/gwen-activation.mp3');
     sound.volume = 0.5;
     sound.play().catch(err => console.log('Audio play failed:', err));
   };
   
   const playBenActivation = () => {
-    const sound = new Audio('/sounds/open sound.mp3');
+    const sound = new Audio('/sounds/ben-activation.mp3');
     sound.volume = 0.5;
     sound.play().catch(err => console.log('Audio play failed:', err));
   };
