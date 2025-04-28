@@ -19,7 +19,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: '2',
-      title: 'Task Management App',
+      title: 'Indiana Jones Portfolio',
       description: 'A productivity tool that helps users organize tasks, set deadlines, and track progress. Features include drag-and-drop functionality and real-time updates.',
       technologies: ['React', 'Firebase', 'Tailwind CSS'],
       imageUrl: 'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
