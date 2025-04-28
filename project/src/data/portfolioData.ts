@@ -12,7 +12,7 @@ export const portfolioData: PortfolioData = {
   projects: [
     {
       id: '1',
-      title: 'E-commerce Platform',
+      title: 'Diversion Hackathon Website',
       description: 'A full-featured online store built with React and Node.js, featuring user authentication, product listings, and secure payment processing.',
       technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
       imageUrl: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
