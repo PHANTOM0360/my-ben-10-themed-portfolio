@@ -15,7 +15,7 @@ export const portfolioData: PortfolioData = {
       title: 'Diversion Hackathon Website',
       description: 'A retro-themed event website for Diversion 2K25 hackathon, built with React and Framer, featuring smooth animations, interactive event schedules, and a nostalgic pixel-art design to capture the essence of old-school computing.',
       technologies: ['React', 'Framer'],
-      imageUrl: '/public/images/diversion.png',
+      imageUrl: '/images/diversion.png',
       link: 'https://blissful-button-030765.framer.app/' 
     },
     {
@@ -23,7 +23,7 @@ export const portfolioData: PortfolioData = {
       title: 'Indiana Jones Portfolio',
       description: 'An adventurous Indiana Jones-themed portfolio, my first-ever web development project, built with HTML, CSS, and JavaScript—featuring treasure map navigation, animated artifacts, and a classic cinematic vibe.',
       technologies: ['HTML', 'Javascript', 'CSS'],
-      imageUrl: '/public/images/indiana jones portfolio.png',
+      imageUrl: '/images/indiana jones portfolio.png',
       link: 'https://phantom0360.github.io/MyIndianaJonesPortfolio/' 
     },
     {
@@ -31,7 +31,7 @@ export const portfolioData: PortfolioData = {
       title: 'Ben 10 Portfolio Website',
       description: 'A Ben 10-themed interactive portfolio built with React, Node.js, Framer Motion, and Tailwind CSS—featuring dynamic theme switching for characters, with Gwen and Kevin 11 modes coming soon for an evolving hero experience.',
       technologies: ['React', 'Node JS', 'Framer Motion', 'Tailwind CSS'],
-      imageUrl: '/public/images/ben 10 portfolio.png',
+      imageUrl: '/images/ben 10 portfolio.png',
       link: 'https://my-ben-10-themed-portfolio-gyhr.vercel.app/' 
     },
 
@@ -40,7 +40,7 @@ export const portfolioData: PortfolioData = {
       title: 'MCR Fan Page',
       description: 'A My Chemical Romance fan page created while learning HTML, CSS, and JavaScript—featuring nostalgic visuals, band info, and interactive elements to celebrate the iconic emo era.',
       technologies: ['HTML', 'Javascript', 'CSS'],
-      imageUrl: '/public/images/mcr fan page.png',
+      imageUrl: '/images/mcr fan page.png',
       link: 'https://phantom0360.github.io/Mcr-fan-page/' 
     }
   ],
