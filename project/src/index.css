@@ -248,24 +248,7 @@ body {
   animation: ben-particle-float 10s infinite ease-in-out;
 }
 
-/* Text effect for Ben theme */
-.ben-futuristic-text {
-  position: relative;
-  text-shadow: 0 0 5px var(--ben-green), 0 0 10px var(--ben-green);
-  animation: ben-text-flicker 8s infinite;
-}
 
-.ben-futuristic-text::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-shadow: 0 0 15px var(--ben-neon-green);
-  opacity: 0;
-  animation: ben-text-glow 4s infinite alternate;
-}
 
 /* Omnitrix glow effect */
 .omnitrix-glow {

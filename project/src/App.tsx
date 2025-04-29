@@ -225,7 +225,7 @@ function App() {
           {/* Footer */}
           <footer className="w-full py-4 text-center text-gray-400 text-sm relative z-10">
             <p 
-              className={currentTheme === 'ben' ? "ben-futuristic-text" : ""}
+              className={currentTheme === 'ben' ? "" : ""}
               data-text={`© ${new Date().getFullYear()} - Arkaprava Chowdhury`}
             >
               © {new Date().getFullYear()} - Arkaprava Chowdhury
