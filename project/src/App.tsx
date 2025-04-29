@@ -7,6 +7,7 @@ import ProjectsSection from './components/sections/ProjectsSection';
 import SkillsSection from './components/sections/SkillsSection';
 import ContactSection from './components/sections/ContactSection';
 import GwenEnergyOrb from './components/GwenEnergyOrb';
+import LoadingScreen from './components/LoadingScreen';
 import type { SectionType } from './types';
 
 function App() {
@@ -15,6 +16,12 @@ function App() {
   const [isGwenActive, setIsGwenActive] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'ben' | 'gwen'>('ben');
   const [isRippleActive, setIsRippleActive] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+  // Explicitly typed callback function for the loading screen
+  const handleLoadComplete = (): void => {
+    setIsPageLoaded(true);
+  };
 
   const handleSectionChange = (section: SectionType) => {
     setActiveSection(section);
@@ -75,112 +82,120 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen w-full ${currentTheme === 'gwen' ? 'gwen-theme' : ''} flex flex-col items-center relative overflow-hidden`}>
-      {/* Theme transition ripple effect */}
-      <div className={`gwen-activation-ripple ${isRippleActive ? 'active' : ''}`}></div>
+    <>
+      {/* Loading Screen */}
+      <LoadingScreen onLoadComplete={handleLoadComplete} />
       
-      {/* Background Effects */}
-      {currentTheme === 'ben' ? (
-        <div className="glitch-container">
-          <div className="glitch-bg"></div>
-          <div className="glitch-line"></div>
-          <div className="glitch-line"></div>
-          <div className="glitch-line"></div>
-          <div className="glitch-line"></div>
-          <div className="glitch-scanline"></div>
-          <div className="glitch-flicker"></div>
-        </div>
-      ) : (
-        <div className="gwen-background">
-          <div className={`gwen-energy ${isGwenActive ? 'active' : ''}`}></div>
-          <div className="gwen-mana-swirl"></div>
-          <div className="gwen-mana-swirl"></div>
-          <div className="gwen-mana-swirl"></div>
-          <div className="gwen-mana-swirl"></div>
-          {/* Dynamically generate particles */}
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div 
-              key={i}
-              className="gwen-particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 10}s`,
-                animationDuration: `${5 + Math.random() * 10}s`
-              }}
-            ></div>
-          ))}
+      {/* Main App - Only rendered when loading is complete */}
+      {isPageLoaded && (
+        <div className={`min-h-screen w-full ${currentTheme === 'gwen' ? 'gwen-theme' : ''} flex flex-col items-center relative overflow-hidden`}>
+          {/* Theme transition ripple effect */}
+          <div className={`gwen-activation-ripple ${isRippleActive ? 'active' : ''}`}></div>
+          
+          {/* Background Effects */}
+          {currentTheme === 'ben' ? (
+            <div className="glitch-container">
+              <div className="glitch-bg"></div>
+              <div className="glitch-line"></div>
+              <div className="glitch-line"></div>
+              <div className="glitch-line"></div>
+              <div className="glitch-line"></div>
+              <div className="glitch-scanline"></div>
+              <div className="glitch-flicker"></div>
+            </div>
+          ) : (
+            <div className="gwen-background">
+              <div className={`gwen-energy ${isGwenActive ? 'active' : ''}`}></div>
+              <div className="gwen-mana-swirl"></div>
+              <div className="gwen-mana-swirl"></div>
+              <div className="gwen-mana-swirl"></div>
+              <div className="gwen-mana-swirl"></div>
+              {/* Dynamically generate particles */}
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div 
+                  key={i}
+                  className="gwen-particle"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 10}s`,
+                    animationDuration: `${5 + Math.random() * 10}s`
+                  }}
+                ></div>
+              ))}
+            </div>
+          )}
+          
+          {/* Theme Switcher */}
+          <ThemeSwitcher onThemeChange={handleThemeChange} currentTheme={currentTheme} />
+          
+          {/* Header with conditional image based on theme */}
+          <header className="w-full py-6 px-4 text-center relative z-10">
+            <div className="max-w-[600px] mx-auto">
+              {currentTheme === 'ben' ? (
+                <img 
+                  src="/images/ARKAPRAVA-CHOWDHURY-4-24-2025.png" 
+                  alt="Arkaprava Chowdhury - Ben Theme" 
+                  className="w-full h-auto"
+                  style={{ filter: 'drop-shadow(0 0 10px rgba(20, 219, 0, 0.7))' }}
+                />
+              ) : (
+                <img 
+                  src="/images/gwen chowdhury.png" 
+                  alt="Arkaprava Chowdhury - Gwen Theme" 
+                  className="w-full h-auto"
+                  style={{ filter: 'drop-shadow(0 0 10px rgba(255, 69, 160, 0.7))' }}
+                />
+              )}
+            </div>
+          </header>
+          
+          {/* Main content */}
+          <main className="flex-1 w-full flex flex-col items-center justify-start pt-8 pb-20 px-4 relative z-10">
+            <div className="mb-12">
+              {currentTheme === 'ben' ? (
+                <OmnitrixDial 
+                  onSectionChange={handleSectionChange}
+                  activeSection={activeSection}
+                  onActivation={handleOmnitrixActivation}
+                  className={isOmnitrixActive ? "omnitrix-glow" : ""}
+                />
+              ) : (
+                <GwenEnergyOrb
+                  onSectionChange={handleSectionChange}
+                  activeSection={activeSection}
+                  onActivation={handleGwenActivation}
+                  isActive={isGwenActive}
+                  className=""
+                />
+              )}
+            </div>
+            
+            {/* Content section */}
+            <motion.div
+              key={`${activeSection}-${currentTheme}`}
+              className="w-full flex justify-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+            >
+              {renderSection()}
+            </motion.div>
+          </main>
+          
+          {/* Footer */}
+          <footer className="w-full py-4 text-center text-gray-400 text-sm relative z-10">
+            <p 
+              className={currentTheme === 'ben' ? "glitch-text" : ""}
+              data-text={`© ${new Date().getFullYear()} - Arkaprava Chowdhury`}
+            >
+              © {new Date().getFullYear()} - Arkaprava Chowdhury
+            </p>
+          </footer>
         </div>
       )}
-      
-      {/* Theme Switcher */}
-      <ThemeSwitcher onThemeChange={handleThemeChange} currentTheme={currentTheme} />
-      
-      {/* Header with conditional image based on theme */}
-      <header className="w-full py-6 px-4 text-center relative z-10">
-        <div className="max-w-[600px] mx-auto">
-          {currentTheme === 'ben' ? (
-            <img 
-              src="/images/ARKAPRAVA-CHOWDHURY-4-24-2025.png" 
-              alt="Arkaprava Chowdhury - Ben Theme" 
-              className="w-full h-auto"
-              style={{ filter: 'drop-shadow(0 0 10px rgba(20, 219, 0, 0.7))' }}
-            />
-          ) : (
-            <img 
-              src="/images/gwen chowdhury.png" 
-              alt="Arkaprava Chowdhury - Gwen Theme" 
-              className="w-full h-auto"
-              style={{ filter: 'drop-shadow(0 0 10px rgba(255, 69, 160, 0.7))' }}
-            />
-          )}
-        </div>
-      </header>
-      
-      {/* Main content */}
-      <main className="flex-1 w-full flex flex-col items-center justify-start pt-8 pb-20 px-4 relative z-10">
-        <div className="mb-12">
-          {currentTheme === 'ben' ? (
-            <OmnitrixDial 
-              onSectionChange={handleSectionChange}
-              activeSection={activeSection}
-              onActivation={handleOmnitrixActivation}
-              className={isOmnitrixActive ? "omnitrix-glow" : ""}
-            />
-          ) : (
-            <GwenEnergyOrb
-              onSectionChange={handleSectionChange}
-              activeSection={activeSection}
-              onActivation={handleGwenActivation}
-              isActive={isGwenActive}
-              className=""
-            />
-          )}
-        </div>
-        
-        {/* Content section */}
-        <motion.div
-          key={`${activeSection}-${currentTheme}`}
-          className="w-full flex justify-center"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.5 }}
-        >
-          {renderSection()}
-        </motion.div>
-      </main>
-      
-      {/* Footer */}
-      <footer className="w-full py-4 text-center text-gray-400 text-sm relative z-10">
-        <p 
-          className={currentTheme === 'ben' ? "glitch-text" : ""}
-          data-text={`© ${new Date().getFullYear()} - Arkaprava Chowdhury`}
-        >
-          © {new Date().getFullYear()} - Arkaprava Chowdhury
-        </p>
-      </footer>
-    </div>
+    </>
   );
 }
 
