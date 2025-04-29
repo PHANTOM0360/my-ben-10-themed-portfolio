@@ -90,18 +90,56 @@ function App() {
       {isPageLoaded && (
         <div className={`min-h-screen w-full ${currentTheme === 'gwen' ? 'gwen-theme' : ''} flex flex-col items-center relative overflow-hidden`}>
           {/* Theme transition ripple effect */}
-          <div className={`gwen-activation-ripple ${isRippleActive ? 'active' : ''}`}></div>
+          <div className={`${currentTheme === 'gwen' ? 'gwen-activation-ripple' : 'ben-activation-ripple'} ${isRippleActive ? 'active' : ''}`}></div>
           
           {/* Background Effects */}
           {currentTheme === 'ben' ? (
-            <div className="glitch-container">
-              <div className="glitch-bg"></div>
-              <div className="glitch-line"></div>
-              <div className="glitch-line"></div>
-              <div className="glitch-line"></div>
-              <div className="glitch-line"></div>
-              <div className="glitch-scanline"></div>
-              <div className="glitch-flicker"></div>
+            <div className="ben-background">
+              <div className={`ben-energy ${isOmnitrixActive ? 'active' : ''}`}></div>
+              <div className="ben-tech-grid"></div>
+              <div className="ben-hologram"></div>
+              <div className="ben-tech-circuit"></div>
+              <div className="ben-tech-pulse"></div>
+              {/* Dynamically generate particles */}
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div 
+                  key={i}
+                  className="ben-particle"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 10}s`,
+                    animationDuration: `${5 + Math.random() * 10}s`
+                  }}
+                ></div>
+              ))}
+              {/* Hexagonal grid cells */}
+              {Array.from({ length: 15 }).map((_, i) => (
+                <div 
+                  key={`hex-${i}`}
+                  className="ben-hexagon"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 5}s`
+                  }}
+                ></div>
+              ))}
+              {/* Tech lines */}
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div 
+                  key={`line-${i}`}
+                  className="ben-tech-line"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    width: `${100 + Math.random() * 200}px`,
+                    transform: `rotate(${Math.random() * 360}deg)`,
+                    animationDelay: `${Math.random() * 3}s`,
+                    opacity: 0.5 + Math.random() * 0.5
+                  }}
+                ></div>
+              ))}
             </div>
           ) : (
             <div className="gwen-background">
@@ -187,7 +225,7 @@ function App() {
           {/* Footer */}
           <footer className="w-full py-4 text-center text-gray-400 text-sm relative z-10">
             <p 
-              className={currentTheme === 'ben' ? "glitch-text" : ""}
+              className={currentTheme === 'ben' ? "ben-futuristic-text" : ""}
               data-text={`© ${new Date().getFullYear()} - Arkaprava Chowdhury`}
             >
               © {new Date().getFullYear()} - Arkaprava Chowdhury
