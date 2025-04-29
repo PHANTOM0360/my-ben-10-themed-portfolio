@@ -29,9 +29,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
   const [selectedSection, setSelectedSection] = useState<SectionType | null>(null);
   const [isSlammed, setIsSlammed] = useState(false);
   
-  // State for the revolving orb
-  const [revolveAngle, setRevolveAngle] = useState(0);
-  
   // Audio playback functions
   const playActivation = () => {
     const sound = new Audio(ACTIVATION_SOUND_URL);
@@ -61,22 +58,10 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     }
   }, [activeSection]);
 
-  // Effect for revolving orb
-  useEffect(() => {
-    let revolvingInterval: NodeJS.Timeout | null = null;
-    
-    if (isActive && !isSlammed) {
-      revolvingInterval = setInterval(() => {
-        setRevolveAngle(prev => (prev + 2) % 360);
-      }, 50);
-    }
-    
-    return () => {
-      if (revolvingInterval) clearInterval(revolvingInterval);
-    };
-  }, [isActive, isSlammed]);
-
   const handleActivation = () => {
+    // Always play activation sound (for both activation and deactivation)
+    playActivation();
+    
     // If currently in slammed state, deactivate immediately
     if (isSlammed) {
       setIsSlammed(false);
@@ -87,7 +72,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     }
     
     // Normal activation logic
-    playActivation();
     const newState = !isActive;
     
     if (!newState) {
@@ -146,11 +130,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     }, 300);
   };
   
-  // Helper function to determine if rotation controls should be shown
-  const shouldShowRotationControls = () => {
-    return isActive && !isSlammed && !isRotating;
-  };
-  
   return (
     <div className={`relative w-80 h-80 ${className}`}>
       {/* Main energy orb */}
@@ -165,12 +144,19 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
           animate={{ 
             boxShadow: isActive 
               ? ['0 0 15px #FF45A0', '0 0 35px #FF45A0', '0 0 15px #FF45A0'] 
-              : '0 0 10px #FF45A0'
+              : '0 0 10px #FF45A0',
+            y: isActive ? 0 : -20  // Move upwards when deactivated
           }}
           transition={{
-            duration: 2,
-            repeat: isActive ? Infinity : 0,
-            repeatType: "reverse"
+            boxShadow: {
+              duration: 2,
+              repeat: isActive ? Infinity : 0,
+              repeatType: "reverse"
+            },
+            y: {
+              duration: 0.4,
+              type: "spring"
+            }
           }}
         >
           {isActive ? (
@@ -197,22 +183,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
                     style={{ filter: 'brightness(0) invert(1)' }} // Make icon white
                   />
                 </div>
-                
-                {/* Revolving pink orb (modified to spin around the symbol) */}
-                {isActive && !isSlammed && (
-                  <>
-                    <motion.div
-                      className="absolute w-8 h-8 bg-pink-300 rounded-full shadow-gwen-glow"
-                      style={{
-                        transformOrigin: 'center center',
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: `rotate(${revolveAngle}deg) translate(60px) translate(-50%, -50%)`,
-                      }}
-                    />
-                  </>
-                )}
               </motion.div>
             </div>
           ) : (
@@ -226,30 +196,26 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </motion.div>
       </div>
       
-      {/* Navigation arrows that appear only when active and not slammed */}
-      {shouldShowRotationControls() && (
+      {/* Navigation arrows - only show when active AND NOT slammed */}
+      {isActive && !isSlammed && (
         <>
-          <motion.button
+          <button
             className="absolute left-[-4rem] top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
             onClick={() => handleRotate('left')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            disabled={isRotating}
+            style={{ opacity: isRotating ? 0.5 : 1 }}
           >
             <ChevronLeft className="text-white" size={24} />
-          </motion.button>
+          </button>
           
-          <motion.button
+          <button
             className="absolute right-[-4rem] top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
             onClick={() => handleRotate('right')}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            disabled={isRotating}
+            style={{ opacity: isRotating ? 0.5 : 1 }}
           >
             <ChevronRight className="text-white" size={24} />
-          </motion.button>
+          </button>
         </>
       )}
       
@@ -259,26 +225,19 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
           <motion.button
             className="bg-pink-500 text-white px-8 py-3 rounded-full shadow-gwen-glow hover:bg-pink-400 transition-colors font-bold text-lg w-32"
             onClick={handleSectionSelect}
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
           >
             Magic!
           </motion.button>
         </div>
       )}
       
-      {/* Close instruction - only show when slammed */}
+      {/* Close instruction - only show when slammed (moved upward compared to select button) */}
       {isSlammed && (
-        <div className="absolute bottom-[-5rem] left-0 right-0 z-20">
-          <motion.p
-            className="text-pink-400 font-bold text-lg animate-pulse text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
+        <div className="absolute bottom-[-2rem] left-0 right-0 z-20">
+          <p className="text-pink-400 font-bold text-lg text-center">
             Click orb to close
-          </motion.p>
+          </p>
         </div>
       )}
       

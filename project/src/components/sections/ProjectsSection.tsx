@@ -15,6 +15,13 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 }) => {
   const { projects } = portfolioData;
 
+  // Handle click on project card
+  const handleProjectClick = (link?: string) => {
+    if (link) {
+      window.open(link, '_blank', 'noopener noreferrer');
+    }
+  };
+
   return (
     <motion.div 
       className={`p-6 ${gwenTheme ? 'bg-pink-900' : 'bg-omnitrix-black-700'} bg-opacity-80 rounded-xl shadow-lg max-w-4xl w-full text-white ${cardClass}`}
@@ -34,10 +41,13 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               gwenTheme 
                 ? 'border-pink-500 hover:shadow-gwen-glow' 
                 : 'border-omnitrix-green-500 hover:shadow-omnitrix-glow'
-            } shadow-md transition-shadow`}
+            } shadow-md transition-shadow cursor-pointer transform hover:-translate-y-1 transition-transform duration-300`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
+            onClick={() => handleProjectClick(project.link)}
+            role="link"
+            aria-label={`View ${project.title} project`}
           >
             {project.imageUrl && (
               <div className="h-48 overflow-hidden">
@@ -70,20 +80,19 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 ))}
               </div>
               
-              {project.link && (
-                <a 
-                  href={project.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className={`inline-block ${
-                    gwenTheme 
-                      ? 'bg-pink-500 hover:bg-pink-600' 
-                      : 'bg-omnitrix-green-500 hover:bg-omnitrix-green-600'
-                  } text-black text-sm font-bold py-1 px-4 rounded transition-colors duration-300`}
-                >
-                  View Project
-                </a>
-              )}
+              <div 
+                className={`inline-block ${
+                  gwenTheme 
+                    ? 'bg-pink-500 hover:bg-pink-600' 
+                    : 'bg-omnitrix-green-500 hover:bg-omnitrix-green-600'
+                } text-black text-sm font-bold py-1 px-4 rounded transition-colors duration-300`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleProjectClick(project.link);
+                }}
+              >
+                View Project
+              </div>
             </div>
           </motion.div>
         ))}

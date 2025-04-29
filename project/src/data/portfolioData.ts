@@ -1,35 +1,47 @@
 import { PortfolioData } from '../types';
 
-// Replace this with your actual portfolio data
+
 export const portfolioData: PortfolioData = {
   about: {
     name: 'Arkaprava Chowdhury',
     title: 'Web Developer & Designer',
     bio: 'I am a creative developer skilled in building sleek, responsive web apps with React, JavaScript, and Tailwind. I blend design and code, backed by experience in Node.js, Python, and tools like Figma and Framer. I love crafting clean interfaces and smooth user experiences.',
     imageUrl: '/images/profile.jpg',
-    resumeUrl: '/files/arkaprava_chowdhury_resume.pdf', // Add your resume file path here
+    resumeUrl: '/files/arkaprava_chowdhury_resume.pdf',
   },
   projects: [
     {
       id: '1',
       title: 'Diversion Hackathon Website',
-      description: 'A full-featured online store built with React and Node.js, featuring user authentication, product listings, and secure payment processing.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      imageUrl: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      description: 'A retro-themed event website for Diversion 2K25 hackathon, built with React and Framer, featuring smooth animations, interactive event schedules, and a nostalgic pixel-art design to capture the essence of old-school computing.',
+      technologies: ['React', 'Framer'],
+      imageUrl: '/public/images/diversion.png',
+      link: 'https://blissful-button-030765.framer.app/' 
     },
     {
       id: '2',
       title: 'Indiana Jones Portfolio',
-      description: 'A productivity tool that helps users organize tasks, set deadlines, and track progress. Features include drag-and-drop functionality and real-time updates.',
-      technologies: ['React', 'Firebase', 'Tailwind CSS'],
-      imageUrl: 'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      description: 'An adventurous Indiana Jones-themed portfolio, my first-ever web development project, built with HTML, CSS, and JavaScript—featuring treasure map navigation, animated artifacts, and a classic cinematic vibe.',
+      technologies: ['HTML', 'Javascript', 'CSS'],
+      imageUrl: '/public/images/indiana jones portfolio.png',
+      link: 'https://phantom0360.github.io/MyIndianaJonesPortfolio/' 
     },
     {
       id: '3',
-      title: 'Portfolio Website',
-      description: 'A responsive portfolio website showcasing my work and skills. Features smooth animations and a clean, modern design.',
-      technologies: ['React', 'Framer Motion', 'Tailwind CSS'],
-      imageUrl: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+      title: 'Ben 10 Portfolio Website',
+      description: 'A Ben 10-themed interactive portfolio built with React, Node.js, Framer Motion, and Tailwind CSS—featuring dynamic theme switching for characters, with Gwen and Kevin 11 modes coming soon for an evolving hero experience.',
+      technologies: ['React', 'Node JS', 'Framer Motion', 'Tailwind CSS'],
+      imageUrl: '/public/images/ben 10 portfolio.png',
+      link: 'https://my-ben-10-themed-portfolio-gyhr.vercel.app/' 
+    },
+
+    {
+      id: '4',
+      title: 'MCR Fan Page',
+      description: 'A My Chemical Romance fan page created while learning HTML, CSS, and JavaScript—featuring nostalgic visuals, band info, and interactive elements to celebrate the iconic emo era.',
+      technologies: ['HTML', 'Javascript', 'CSS'],
+      imageUrl: '/public/images/mcr fan page.png',
+      link: 'https://phantom0360.github.io/Mcr-fan-page/' 
     }
   ],
   skills: [
@@ -40,13 +52,13 @@ export const portfolioData: PortfolioData = {
         { name: 'JavaScript', level: 9 },
         { name: 'TypeScript', level: 8 },
         { name: 'HTML/CSS', level: 9 },
-        { name: 'Tailwind CSS', level: 8 }
+        { name: 'Tailwind CSS', level: 7 }
       ]
     },
     {
       category: 'Backend',
       items: [
-        { name: 'Node.js', level: 7 },
+        { name: 'Node.js', level: 2 },
         { name: 'Python', level: 7 },
         { name: 'MongoDB', level: 6 },
         { name: 'C', level: 8 }
