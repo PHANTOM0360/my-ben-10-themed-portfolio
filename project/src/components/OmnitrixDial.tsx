@@ -297,11 +297,11 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
         </motion.div>
       </div>
       
-      {/* Rotation controls - only visible when activated but not slammed */}
+{/* Rotation controls - only visible when activated but not slammed */}
 {isActivated && !isSlammed && !isDeactivating && (
   <>
-    {/* Container for arrow buttons positioned below the dial with more vertical space */}
-    <div className="absolute bottom-[-5rem] left-1/2 transform -translate-x-1/2 flex items-center justify-center gap-16">
+    {/* Left and right arrow buttons container for mobile */}
+    <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-4rem] flex gap-16 sm:hidden">
       <button 
         onClick={() => handleRotate('left')}
         className="w-12 h-12 bg-omnitrix-green-400 rounded-full flex items-center justify-center shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors"
@@ -318,17 +318,34 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
       </button>
     </div>
     
-    {/* Select button - moved even further down for more spacing */}
+    {/* Left arrow button for desktop */}
+    <button 
+      onClick={() => handleRotate('left')}
+      className="absolute left-[-4rem] top-1/2 -translate-y-1/2 w-12 h-12 bg-omnitrix-green-400 rounded-full flex items-center justify-center shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors hidden sm:flex"
+      aria-label="Rotate left"
+    >
+      <ChevronLeft className="w-8 h-8 text-black" strokeWidth={3} />
+    </button>
+    
+    {/* Right arrow button for desktop */}
+    <button 
+      onClick={() => handleRotate('right')}
+      className="absolute right-[-4rem] top-1/2 -translate-y-1/2 w-12 h-12 bg-omnitrix-green-400 rounded-full flex items-center justify-center shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors hidden sm:flex"
+      aria-label="Rotate right"
+    >
+      <ChevronRight className="w-8 h-8 text-black" strokeWidth={3} />
+    </button>
+    
+    {/* Select button - positioned differently for mobile vs desktop */}
     <button 
       onClick={handleSectionSelect}
-      className="absolute bottom-[-10rem] left-1/2 transform -translate-x-1/2 bg-omnitrix-green-400 text-black px-8 py-3 rounded-full shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors font-bold text-lg"
+      className="absolute left-1/2 transform -translate-x-1/2 bottom-[-8rem] sm:bottom-[-4rem] bg-omnitrix-green-400 text-black px-8 py-3 rounded-full shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors font-bold text-lg"
       aria-label="Select section"
     >
       Slam!
     </button>
   </>
-)}
-      
+)}  
       {/* Instructions */}
       {!isActivated && (
         <div className="absolute bottom-[-4rem] left-1/2 transform -translate-x-1/2 text-center">
