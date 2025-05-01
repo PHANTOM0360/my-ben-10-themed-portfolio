@@ -123,44 +123,6 @@ body {
   animation: ben-grid-perspective 30s infinite linear;
 }
 
-/* 3D Hologram effect */
-.ben-hologram {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 2px solid rgba(20, 219, 0, 0.5);
-  box-shadow: 0 0 50px rgba(20, 219, 0, 0.3);
-  transform: translate(-50%, -50%) rotateX(60deg);
-  animation: ben-hologram-rotate 15s infinite linear;
-  opacity: 0.4;
-}
-
-.ben-hologram::before {
-  content: '';
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  right: -50px;
-  bottom: -50px;
-  border: 1px solid rgba(20, 219, 0, 0.3);
-  border-radius: 50%;
-  animation: ben-hologram-pulse 4s infinite alternate ease-in-out;
-}
-
-.ben-hologram::after {
-  content: '';
-  position: absolute;
-  top: -100px;
-  left: -100px;
-  right: -100px;
-  bottom: -100px;
-  border: 1px dashed rgba(20, 219, 0, 0.2);
-  border-radius: 50%;
-  animation: ben-hologram-pulse 6s infinite alternate-reverse ease-in-out;
-}
 
 /* Tech circuit paths */
 .ben-tech-circuit {
