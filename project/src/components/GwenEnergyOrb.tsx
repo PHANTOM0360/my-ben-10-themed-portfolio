@@ -196,32 +196,46 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </motion.div>
       </div>
       
-      {/* Navigation arrows - only show when active AND NOT slammed */}
+      {/* Navigation arrows with responsive positioning */}
       {isActive && !isSlammed && (
         <>
-          <button
-            className="absolute left-[-4rem] top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
-            onClick={() => handleRotate('left')}
-            disabled={isRotating}
-            style={{ opacity: isRotating ? 0.5 : 1 }}
-          >
-            <ChevronLeft className="text-white" size={24} />
-          </button>
+          <motion.div className="absolute bottom-[-3rem] md:bottom-auto md:left-[-4rem] md:top-1/2 left-1/4 transform md:-translate-y-1/2 -translate-x-1/2 w-12 h-12">
+            <motion.button
+              className="w-full h-full rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              onClick={() => handleRotate('left')}
+              disabled={isRotating}
+              style={{ opacity: isRotating ? 0.5 : 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronLeft className="text-white" size={24} />
+            </motion.button>
+          </motion.div>
           
-          <button
-            className="absolute right-[-4rem] top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
-            onClick={() => handleRotate('right')}
-            disabled={isRotating}
-            style={{ opacity: isRotating ? 0.5 : 1 }}
-          >
-            <ChevronRight className="text-white" size={24} />
-          </button>
+          <motion.div className="absolute bottom-[-3rem] md:bottom-auto md:right-[-4rem] md:top-1/2 right-1/4 transform md:-translate-y-1/2 translate-x-1/2 w-12 h-12">
+            <motion.button
+              className="w-full h-full rounded-full bg-pink-600 flex items-center justify-center shadow-gwen-glow"
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              onClick={() => handleRotate('right')}
+              disabled={isRotating}
+              style={{ opacity: isRotating ? 0.5 : 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="text-white" size={24} />
+            </motion.button>
+          </motion.div>
         </>
       )}
       
       {/* Selection button - only show when active and not slammed */}
       {isActive && !isSlammed && (
-        <div className="absolute bottom-[-4rem] left-0 right-0 flex justify-center">
+        <div className="absolute bottom-[-7rem] md:bottom-[-4rem] left-0 right-0 flex justify-center">
           <motion.button
             className="bg-pink-500 text-white px-8 py-3 rounded-full shadow-gwen-glow hover:bg-pink-400 transition-colors font-bold text-lg w-32"
             onClick={handleSectionSelect}

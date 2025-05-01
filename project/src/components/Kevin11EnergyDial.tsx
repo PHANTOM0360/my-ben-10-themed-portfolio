@@ -697,58 +697,62 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
       <AnimatePresence>
         {isActive && !isSlammed && (
           <>
-            <motion.button
-              className="absolute left-[-4rem] top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              onClick={() => handleRotate('left')}
-              disabled={isRotating}
-              style={{ 
-                opacity: isRotating ? 0.5 : 1,
-                background: metalGradient,
-                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease'
-              }}
-              whileHover={{
-                scale: 1.1
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronLeft className="text-gray-200" size={30} />
-            </motion.button>
+            <motion.div className="absolute bottom-[-3rem] md:bottom-auto md:left-[-4rem] md:top-1/2 left-1/4 transform md:-translate-y-1/2 -translate-x-1/2 w-16 h-16">
+              <motion.button
+                className="w-full h-full rounded-full flex items-center justify-center shadow-lg"
+                initial={{ opacity: 0, y: 20, x: 0, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, x: 0 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => handleRotate('left')}
+                disabled={isRotating}
+                style={{ 
+                  opacity: isRotating ? 0.5 : 1,
+                  background: metalGradient,
+                  boxShadow: 'inset 0 0 10px rgba(0,0,0,0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+                whileHover={{
+                  scale: 1.1
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChevronLeft className="text-gray-200" size={30} />
+              </motion.button>
+            </motion.div>
             
-            <motion.button
-              className="absolute right-[-4rem] top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.4 }}
-              onClick={() => handleRotate('right')}
-              disabled={isRotating}
-              style={{ 
-                opacity: isRotating ? 0.5 : 1,
-                background: metalGradient,
-                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.3)',
-                transition: 'all 0.3s ease'
-              }}
-              whileHover={{
-                scale: 1.1
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronRight className="text-gray-200" size={30} />
-            </motion.button>
+            <motion.div className="absolute bottom-[-3rem] md:bottom-auto md:right-[-4rem] md:top-1/2 right-1/4 transform md:-translate-y-1/2 translate-x-1/2 w-16 h-16">
+              <motion.button
+                className="w-full h-full rounded-full flex items-center justify-center shadow-lg"
+                initial={{ opacity: 0, y: 20, x: 0, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, x: 0 }}
+                transition={{ duration: 0.4 }}
+                onClick={() => handleRotate('right')}
+                disabled={isRotating}
+                style={{ 
+                  opacity: isRotating ? 0.5 : 1,
+                  background: metalGradient,
+                  boxShadow: 'inset 0 0 10px rgba(0,0,0,0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+                whileHover={{
+                  scale: 1.1
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChevronRight className="text-gray-200" size={30} />
+              </motion.button>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
       
       {/* Selection button with enhanced animations - only show when active and not slammed */}
       <AnimatePresence>
-        {isActive && !isSlammed && (
+      {isActive && !isSlammed && (
           <motion.div 
-            className="absolute bottom-[-4rem] left-0 right-0 flex justify-center"
+            className="absolute bottom-[-7rem] md:bottom-[-4rem] left-0 right-0 flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -789,9 +793,9 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
       
       {/* Close instruction with text that matches current theme - only show when slammed */}
       <AnimatePresence>
-        {isSlammed && (
+      {isSlammed && (
           <motion.div 
-            className="absolute bottom-[-2rem] left-0 right-0 z-20"
+            className="absolute bottom-[-2rem] md:bottom-[-2rem] left-0 right-0 z-20"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
@@ -816,7 +820,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
                 }
               }}
             >
-              Click dial to release the substance
+              Touch to de-absorb the substance
             </motion.p>
           </motion.div>
         )}
@@ -824,9 +828,9 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
       
       {/* Instructions when not activated with subtle animation */}
       <AnimatePresence>
-        {!isActive && (
+      {!isActive && (
           <motion.div 
-            className="absolute bottom-[-4rem] left-0 right-0 flex justify-center"
+            className="absolute bottom-[-3rem] md:bottom-[-4rem] left-0 right-0 flex justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
