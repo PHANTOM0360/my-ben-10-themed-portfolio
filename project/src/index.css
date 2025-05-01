@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1627,4 +1626,65 @@ input:checked + .theme-switch-slider:before {
 .kevin-activation-ripple.active {
   transform: scale(3);
   opacity: 0.8;
+}
+
+
+.pulse-glow {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+.loading-bar-glow {
+  transition: width 0.2s ease-out;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 5px;
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% { left: 0; }
+  100% { left: 100%; }
+}
+
+.glitch-loading-text {
+  position: relative;
+  animation: glitch 1s linear infinite alternate;
+}
+
+@keyframes glitch {
+  0% { text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 currentColor; }
+  25% { text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 currentColor; }
+  26% { text-shadow: none; }
+  50% { text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 currentColor; }
+  75% { text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 currentColor; }
+  76% { text-shadow: none; }
+  100% { text-shadow: 1px 0 0 rgba(255, 0, 0, 0.5), -1px 0 0 currentColor; }
+}
+
+.flicker-text {
+  animation: flicker 3s linear infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.8; }
+  10% { opacity: 1; }
+  15% { opacity: 0.3; }
+  20% { opacity: 1; }
+  70% { opacity: 1; }
+  80% { opacity: 0.6; }
+  90% { opacity: 1; }
+  92% { opacity: 0.1; }
+  93% { opacity: 1; }
 }
