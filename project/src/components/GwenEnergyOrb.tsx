@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { sectionIcons } from '../data/sectionIcons';
 import type { SectionType } from '../types';
 
-// Sound file paths
 const ACTIVATION_SOUND_URL = '/sounds/gwen-activation.wav';
 const ROTATION_SOUND_URL = '/sounds/gwen-rotate.wav';
 const SELECTION_SOUND_URL = '/sounds/gwen-select.wav';
@@ -29,7 +28,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
   const [selectedSection, setSelectedSection] = useState<SectionType | null>(null);
   const [isSlammed, setIsSlammed] = useState(false);
   
-  // Audio playback functions
   const playActivation = () => {
     const sound = new Audio(ACTIVATION_SOUND_URL);
     sound.volume = 0.5;
@@ -59,10 +57,8 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
   }, [activeSection]);
 
   const handleActivation = () => {
-    // Always play activation sound (for both activation and deactivation)
     playActivation();
     
-    // If currently in slammed state, deactivate immediately
     if (isSlammed) {
       setIsSlammed(false);
       onActivation(false);
@@ -71,7 +67,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
       return;
     }
     
-    // Normal activation logic
     const newState = !isActive;
     
     if (!newState) {
@@ -79,8 +74,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
       onSectionChange(null as any);
       setSelectedSection(null);
     } else {
-      // We don't want to show any section until select is pressed
-      // so don't trigger onSectionChange here
       onActivation(true);
     }
   };
@@ -100,7 +93,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     
     setCurrentIndex(newIndex);
     
-    // Only update the section if already slammed
     if (isSlammed) {
       const newSection = sectionIcons[newIndex].id;
       onSectionChange(newSection);
@@ -121,7 +113,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
     setSelectedSection(currentSection);
     onSectionChange(currentSection);
     
-    // Set to slammed state
     setIsSlammed(true);
     
     setIsRotating(true);
@@ -132,7 +123,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
   
   return (
     <div className={`relative w-80 h-80 ${className}`}>
-      {/* Main energy orb */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <motion.div
           className={`w-56 h-56 rounded-full flex items-center justify-center cursor-pointer 
@@ -145,7 +135,7 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
             boxShadow: isActive 
               ? ['0 0 15px #FF45A0', '0 0 35px #FF45A0', '0 0 15px #FF45A0'] 
               : '0 0 10px #FF45A0',
-            y: isActive ? 0 : -20  // Move upwards when deactivated
+            y: isActive ? 0 : -20
           }}
           transition={{
             boxShadow: {
@@ -160,9 +150,7 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
           }}
         >
           {isActive ? (
-            // Active state
             <div className="relative w-48 h-48 flex items-center justify-center rounded-full overflow-hidden">
-              {/* Central area */}
               <motion.div 
                 className="relative z-10 w-40 h-40 rounded-full bg-pink-600 flex items-center justify-center overflow-hidden"
                 animate={{
@@ -174,19 +162,17 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
                   repeatType: "reverse"
                 }}
               >
-                {/* Show icon in both active and slammed state */}
                 <div className="w-full h-full flex items-center justify-center">
                   <img 
                     src={sectionIcons[currentIndex].name} 
                     alt={sectionIcons[currentIndex].id} 
                     className="section-icon w-20 h-20 z-20"
-                    style={{ filter: 'brightness(0) invert(1)' }} // Make icon white
+                    style={{ filter: 'brightness(0) invert(1)' }}
                   />
                 </div>
               </motion.div>
             </div>
           ) : (
-            // Inactive state - simple pink orb
             <div className="relative w-48 h-48 flex items-center justify-center">
               <div className="w-40 h-40 rounded-full bg-pink-600 flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-pink-400 opacity-80"></div>
@@ -196,7 +182,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </motion.div>
       </div>
       
-      {/* Navigation arrows with responsive positioning */}
       {isActive && !isSlammed && (
         <>
           <motion.div className="absolute bottom-[-3rem] md:bottom-auto md:left-[-4rem] md:top-1/2 left-1/4 transform md:-translate-y-1/2 -translate-x-1/2 w-12 h-12">
@@ -233,7 +218,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </>
       )}
       
-      {/* Selection button - only show when active and not slammed */}
       {isActive && !isSlammed && (
         <div className="absolute bottom-[-7rem] md:bottom-[-4rem] left-0 right-0 flex justify-center">
           <motion.button
@@ -246,7 +230,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </div>
       )}
       
-      {/* Close instruction - only show when slammed (moved upward compared to select button) */}
       {isSlammed && (
         <div className="absolute bottom-[-2rem] left-0 right-0 z-20">
           <p className="text-pink-400 font-bold text-lg text-center">
@@ -255,7 +238,6 @@ const GwenEnergyOrb: React.FC<GwenEnergyOrbProps> = ({
         </div>
       )}
       
-      {/* Instructions when not activated */}
       {!isActive && (
         <div className="absolute bottom-[-4rem] left-0 right-0 flex justify-center">
           <p className="text-pink-500 font-bold text-lg animate-pulse">

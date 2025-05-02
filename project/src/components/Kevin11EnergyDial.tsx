@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { SectionType } from '../types';
 import { sectionIcons } from '../data/sectionIcons';
 
-// Sound file paths with proper typing
 const SOUNDS = {
   ACTIVATION: '/sounds/kevin-activation.mp3',
   ROTATION: '/sounds/kevin-activation.mp3',
@@ -12,10 +11,8 @@ const SOUNDS = {
   DEACTIVATION: '/sounds/kevin-deactivate.mp3'
 } as const;
 
-// Define sound types based on the SOUNDS object keys
 type SoundType = keyof typeof SOUNDS;
 
-// Define texture mappings with colors
 const TEXTURES = {
   'about': 'diamond',
   'skills': 'brass',
@@ -23,10 +20,9 @@ const TEXTURES = {
   'contact': 'red-rock'
 } as const;
 
-// Texture type derived from TEXTURES values
 type TextureType = typeof TEXTURES[keyof typeof TEXTURES];
 
-// Define colors for each texture
+
 const COLORS = {
   'diamond': {
     base: '#CFFAFE',
@@ -66,7 +62,7 @@ interface Kevin11EnergyDialProps {
   className?: string;
 }
 
-// Interface for style objects
+
 interface IconStyle {
   filter: string;
   color?: string;
@@ -96,7 +92,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
   const transformTimeout = useRef<NodeJS.Timeout | null>(null);
   const spreadAnimationRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Play sound utility function with proper typing
   const playSound = (soundType: SoundType) => {
     try {
       const sound = new Audio(SOUNDS[soundType]);
@@ -107,7 +102,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     }
   };
 
-  // Sync with external state
+
   useEffect(() => {
     if (activeSection) {
       const index = sectionIcons.findIndex(icon => icon.id === activeSection);
@@ -118,7 +113,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     }
   }, [activeSection]);
 
-  // Cleanup timeouts
+ 
   useEffect(() => {
     return () => {
       if (transformTimeout.current) clearTimeout(transformTimeout.current);
@@ -126,7 +121,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     };
   }, []);
 
-  // Handle activation/deactivation effects
+
   useEffect(() => {
     if (isActive) {
       setCracksVisible(true);
@@ -155,12 +150,12 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     }
   }, [isActive]);
 
-  // Update texture class on the document body
+
   useEffect(() => {
     if (isActive && isSlammed) {
       const currentTexture = getCurrentTexture();
       
-      // Remove all previous texture classes
+      
       document.body.classList.remove(
         'kevin-texture-diamond',
         'kevin-texture-brass',
@@ -168,7 +163,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         'kevin-texture-red-rock'
       );
       
-      // Add current texture class and update backgrounds
+      
       document.body.classList.add(`kevin-texture-${currentTexture}`);
       
       document.querySelectorAll('.kevin-background-diamond, .kevin-background-brass, .kevin-background-rock1, .kevin-background-red-rock')
@@ -181,7 +176,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
       if (transformTimeout.current) clearTimeout(transformTimeout.current);
       transformTimeout.current = setTimeout(() => setTransformActive(false), 2000);
     } else if (!isActive) {
-      // Reset when inactive
+    
       document.body.classList.remove(
         'kevin-texture-diamond',
         'kevin-texture-brass',
@@ -194,7 +189,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     }
   }, [isActive, isSlammed, currentIndex]);
 
-  // Manage spread animation
+ 
   useEffect(() => {
     if (isSpreadingTexture) {
       const runSpreadAnimation = () => {
@@ -341,22 +336,20 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     return `circle(${spreadProgress}% at center)`;
   };
   
-  // Common style objects
   const metalGradient = 'linear-gradient(135deg, #4A4A4A 0%, #2D2D2D 50%, #3D3D3D 100%)';
   const inactiveButtonStyle = {
     boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5), 0 0 10px rgba(255,255,255,0.2)',
     background: metalGradient
   };
   
-  // Enhanced glow animation styles
+
   const pulseGlow = {
-    animation: 'none', // Removing animation that might cause green tint
+    animation: 'none', 
     WebkitAnimation: 'none'
   };
   
   return (
     <div className="relative w-96 h-96 ${className}">
-      {/* Transformation effect overlay */}
       <div 
         className="absolute inset-0 z-30 pointer-events-none opacity-0"
         style={{
@@ -365,13 +358,13 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         }}
       />
       
-      {/* CSS-based textures for background */}
+
       <div className="kevin-background-diamond absolute inset-0 opacity-0 transition-opacity duration-1000 z-0"></div>
       <div className="kevin-background-brass absolute inset-0 opacity-0 transition-opacity duration-1000 z-0"></div>
       <div className="kevin-background-rock1 absolute inset-0 opacity-0 transition-opacity duration-1000 z-0"></div>
       <div className="kevin-background-red-rock absolute inset-0 opacity-0 transition-opacity duration-1000 z-0"></div>
       
-      {/* CSS-based subtle crack pattern that appears gradually */}
+
       <motion.div 
   className="absolute inset-0 pointer-events-none z-10 rounded-full overflow-hidden"
   initial={{ opacity: 0 }}
@@ -381,11 +374,10 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     backgroundImage: 'linear-gradient(90deg, transparent 98%, rgba(255,255,255,0.1) 98%, transparent 100%), linear-gradient(0deg, transparent 98%, rgba(255,255,255,0.1) 98%, transparent 100%)',
     backgroundSize: '20px 20px',
     mixBlendMode: 'overlay',
-    borderRadius: '50%' // Ensure circular containment
+    borderRadius: '50%' 
   }}
 />
       
-      {/* Background texture effect when slammed */}
       <AnimatePresence>
         {(isSlammed || isSpreadingTexture) && (
           <motion.div 
@@ -404,7 +396,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
       </AnimatePresence>
       
       
-      {/* Show spreading texture animation effect with enhanced visuals */}
       <AnimatePresence>
         {isSpreadingTexture && (
           <motion.div
@@ -432,7 +423,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         )}
       </AnimatePresence>
       
-      {/* Main Kevin 11 dial with smoother animations and no blue borders */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
         <motion.div
           className={`w-72 h-72 rounded-full flex items-center justify-center cursor-pointer overflow-hidden`}
@@ -464,7 +454,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
             }
           }}
         >
-          {/* Enhanced metallic ring effects */}
           <motion.div 
             className="absolute inset-0 rounded-full overflow-hidden pointer-events-none" 
             style={{
@@ -485,7 +474,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
             }}
           />
           
-          {/* Enhanced scratched surface effect with subtle movement */}
           <motion.div 
   className="absolute inset-0 rounded-full overflow-hidden pointer-events-none" 
   style={{
@@ -494,7 +482,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
     backgroundPosition: 'center',
     mixBlendMode: 'soft-light',
     opacity: 0.6,
-    borderRadius: '50%' // Ensure circular containment
+    borderRadius: '50%'
   }}
   animate={{
     backgroundPosition: isActive ? [
@@ -510,7 +498,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
   }}
 />
           
-          {/* Enhanced crack pattern system */}
           <AnimatePresence>
   {cracksVisible && (
     <motion.div 
@@ -524,14 +511,14 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         backgroundSize: '20px 20px, 30px 30px',
         backgroundPosition: 'center',
         mixBlendMode: 'overlay',
-        borderRadius: '50%' // Ensure circular containment
+        borderRadius: '50%' 
       }}
     />
   )}
 </AnimatePresence>
           
           {isActive ? (
-            // Active state with smoother animations
+
             <motion.div 
               className="relative w-60 h-60 flex items-center justify-center"
               animate={{ 
@@ -570,7 +557,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
                   repeatType: "reverse"
                 }}
               >
-                {/* Inner metallic effects with more dynamic animation */}
+
                 <motion.div 
                   className="absolute inset-0 rounded-full overflow-hidden pointer-events-none" 
                   style={{
@@ -599,7 +586,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
                   }}
                 />
                 
-                {/* Enhanced section icon with subtle floating animation */}
                 <motion.div 
                   className="w-full h-full flex items-center justify-center z-20"
                   animate={{
@@ -638,7 +624,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
               </motion.div>
             </motion.div>
           ) : (
-            // Inactive state - "11" display with enhanced metallic look
+  
             <motion.div 
               className="relative w-60 h-60 flex items-center justify-center"
               animate={{ scale: [1, 1.01, 1] }}
@@ -693,7 +679,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         </motion.div>
       </div>
       
-      {/* Navigation arrows with enhanced animations - only show when active AND NOT slammed */}
       <AnimatePresence>
         {isActive && !isSlammed && (
           <>
@@ -748,7 +733,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         )}
       </AnimatePresence>
       
-      {/* Selection button with enhanced animations - only show when active and not slammed */}
       <AnimatePresence>
       {isActive && !isSlammed && (
           <motion.div 
@@ -791,7 +775,7 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         )}
       </AnimatePresence>
       
-      {/* Close instruction with text that matches current theme - only show when slammed */}
+
       <AnimatePresence>
       {isSlammed && (
           <motion.div 
@@ -826,7 +810,6 @@ const Kevin11EnergyDial: React.FC<Kevin11EnergyDialProps> = ({
         )}
       </AnimatePresence>
       
-      {/* Instructions when not activated with subtle animation */}
       <AnimatePresence>
       {!isActive && (
           <motion.div 

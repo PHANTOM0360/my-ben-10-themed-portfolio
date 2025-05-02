@@ -17,7 +17,6 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 }) => {
   const { projects } = portfolioData;
 
-  // Handle click on project card
   const handleProjectClick = (link?: string) => {
     if (link) {
       window.open(link, '_blank', 'noopener noreferrer');

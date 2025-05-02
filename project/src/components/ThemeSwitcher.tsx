@@ -13,23 +13,18 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   
-  // Check if mobile on mount and when window resizes
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 768px is standard breakpoint for mobile
+      setIsMobile(window.innerWidth < 768);
     };
     
-    // Initial check
     checkIfMobile();
     
-    // Add resize listener
     window.addEventListener('resize', checkIfMobile);
     
-    // Cleanup
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -43,7 +38,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
     };
   }, []);
   
-  // Sound effects
   const playThemeActivation = (theme: 'ben' | 'gwen' | 'kevin') => {
     let soundPath;
     
@@ -75,13 +69,11 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
     onThemeChange(theme);
     setIsMenuOpen(false);
     
-    // Allow animations to complete before enabling toggle again
     setTimeout(() => {
       setIsAnimating(false);
     }, 1500);
   };
 
-  // Helper function to determine button style based on theme
   const getButtonStyle = (theme: 'ben' | 'gwen' | 'kevin') => {
     switch(theme) {
       case 'ben':
@@ -95,7 +87,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
     }
   };
 
-  // Get current theme icon
   const getCurrentThemeIcon = () => {
     switch(currentTheme) {
       case 'ben':
@@ -127,7 +118,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
     }
   };
 
-  // Add CSS for Kevin's glow effect directly in the component
   const kevinGlowStyle = `
     .shadow-kevin-glow {
       box-shadow: 0 0 10px 3px rgba(200, 200, 220, 0.7);
@@ -138,7 +128,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
   return (
     <div className="fixed top-4 right-4 z-20" ref={menuRef}>
       <style>{kevinGlowStyle}</style>
-      {/* Transition Flash Effect */}
       <div 
         className={`theme-activation-ripple ${isAnimating ? 'active' : ''}`}
         style={{
@@ -152,7 +141,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
       
       {isMobile ? (
         <div className="relative">
-          {/* Mobile Circular Menu Button */}
           <motion.button
             className={`rounded-full flex items-center justify-center w-12 h-12 
                       ${getButtonStyle(currentTheme)}`}
@@ -164,7 +152,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
             {getCurrentThemeIcon()}
           </motion.button>
           
-          {/* Dropdown Menu */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div 
@@ -174,7 +161,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Ben Option */}
                 <motion.button
                   className={`w-full py-3 px-4 flex items-center gap-3 ${currentTheme === 'ben' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
                   onClick={() => handleThemeChange('ben')}
@@ -191,7 +177,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
                   <span className="text-white font-bold">BEN</span>
                 </motion.button>
                 
-                {/* Gwen Option */}
                 <motion.button
                   className={`w-full py-3 px-4 flex items-center gap-3 ${currentTheme === 'gwen' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
                   onClick={() => handleThemeChange('gwen')}
@@ -202,7 +187,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
                   <span className="text-white font-bold">GWEN</span>
                 </motion.button>
                 
-                {/* Kevin Option */}
                 <motion.button
                   className={`w-full py-3 px-4 flex items-center gap-3 ${currentTheme === 'kevin' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
                   onClick={() => handleThemeChange('kevin')}
@@ -227,9 +211,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
           </AnimatePresence>
         </div>
       ) : (
-        // Desktop view stays the same
         <div className="flex flex-row gap-2">
-          {/* Ben Button */}
           <motion.button
             className={`theme-switcher-btn rounded-full flex items-center justify-center p-2
                       ${currentTheme === 'ben' ? getButtonStyle('ben') : 'bg-gray-600'}`}
@@ -255,7 +237,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
             </motion.div>
           </motion.button>
           
-          {/* Gwen Button */}
           <motion.button
             className={`theme-switcher-btn rounded-full flex items-center justify-center p-2
                       ${currentTheme === 'gwen' ? getButtonStyle('gwen') : 'bg-gray-600'}`}
@@ -275,7 +256,6 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
             </motion.div>
           </motion.button>
           
-          {/* Kevin Button */}
           <motion.button
             className={`theme-switcher-btn rounded-full flex items-center justify-center p-2
                       ${currentTheme === 'kevin' ? getButtonStyle('kevin') : 'bg-gray-600'}`}

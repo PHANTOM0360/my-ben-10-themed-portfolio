@@ -9,7 +9,7 @@ const ACTIVATION_SOUND_URL = '/sounds/open sound.mp3';
 const ROTATION_SOUND_URL = '/sounds/rotation sound.mp3';
 const SELECTION_SOUND_URL = '/sounds/activate sound.mp3';
 const BACKGROUND_MUSIC_URL = '/sounds/background music.mp3';
-const DEACTIVATION_SOUND_URL = '/sounds/deactivate sound.mp3'; // New sound effect
+const DEACTIVATION_SOUND_URL = '/sounds/deactivate sound.mp3';
 
 interface OmnitrixDialProps {
   onSectionChange: (section: SectionType) => void;
@@ -28,10 +28,8 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(false);
   const [selectedSection, setSelectedSection] = useState<SectionType | null>(null);
-  // Add rotation angle state for the outer ring
   const [outerRotationAngle, setOuterRotationAngle] = useState(0);
   
-  // New states for enhanced activation/deactivation
   const [isSlammed, setIsSlammed] = useState(false);
   const [isDeactivating, setIsDeactivating] = useState(false);
   const [displayShape, setDisplayShape] = useState<'diamond' | 'hourglass'>('hourglass');
@@ -41,7 +39,7 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
   const [playActivation] = useSound(ACTIVATION_SOUND_URL, { volume: 0.5 });
   const [playRotation] = useSound(ROTATION_SOUND_URL, { volume: 0.4 });
   const [playSelection] = useSound(SELECTION_SOUND_URL, { volume: 0.5 });
-  const [playDeactivation] = useSound(DEACTIVATION_SOUND_URL, { volume: 0.5 }); // New sound hook
+  const [playDeactivation] = useSound(DEACTIVATION_SOUND_URL, { volume: 0.5 });
   const [playBackgroundMusic, { stop: stopBackgroundMusic }] = useSound(BACKGROUND_MUSIC_URL, { 
     volume: 0.2,
     loop: true,
@@ -71,13 +69,11 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
   }, [activeSection]);
 
   const handleActivation = () => {
-    // If currently in slammed state, start deactivation sequence
     if (isSlammed) {
       startDeactivationSequence();
       return;
     }
     
-    // Normal activation logic
     playActivation();
     const newState = !isActivated;
     setIsActivated(newState);
@@ -90,43 +86,34 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
       const initialSection = sectionIcons[currentIndex].id;
       onSectionChange(initialSection);
       setSelectedSection(initialSection);
-      // When activating, set the display shape to diamond
       setDisplayShape('diamond');
     }
   };
 
-  // Fixed deactivation sequence
   const startDeactivationSequence = () => {
-    // Play deactivation sound immediately and ensure component state reflects deactivation
     setIsDeactivating(true);
     
-    // Ensure sound plays by placing it outside of any async operations
-    // This is the key fix - making sure playDeactivation() executes synchronously
     playDeactivation();
     
-    // Change shape to hourglass for deactivation
     setDisplayShape('hourglass');
     
-    // Start blinking animation
     setIsBlinking(true);
     
-    // Red blinking sequence (blink 3 times)
     let blinkCount = 0;
     const blinkInterval = setInterval(() => {
       setDisplayColor(prev => prev === 'red' ? 'white' : 'red');
       blinkCount++;
       
-      if (blinkCount >= 15) { // 3 complete blinks (on-off cycles)
+      if (blinkCount >= 15) {
         clearInterval(blinkInterval);
         setIsBlinking(false);
         setDisplayColor('red');
         
-        // After solid red state, return to completely inactive state
         setTimeout(() => {
           setIsSlammed(false);
           setIsDeactivating(false);
           setDisplayColor('green');
-          setIsActivated(false); // Complete deactivation
+          setIsActivated(false);
           onActivation(false);
           onSectionChange(null as any);
           setSelectedSection(null);
@@ -144,11 +131,9 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
     let newIndex = currentIndex;
     if (direction === 'left') {
       newIndex = (currentIndex - 1 + sectionIcons.length) % sectionIcons.length;
-      // Rotate outer ring left by 45 degrees
       setOuterRotationAngle(prev => prev - 45);
     } else {
       newIndex = (currentIndex + 1) % sectionIcons.length;
-      // Rotate outer ring right by 45 degrees
       setOuterRotationAngle(prev => prev + 45);
     }
     
@@ -172,7 +157,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
     onSectionChange(currentSection);
     onActivation(true);
     
-    // Set to slammed state
     setIsSlammed(true);
     setDisplayShape('hourglass');
     setDisplayColor('white');
@@ -183,16 +167,14 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
     }, 300);
   };
   
-  // Helper function to determine current shape display
   const getShapeClipPath = () => {
     if (displayShape === 'diamond') {
       return 'polygon(50% 0%, 83% 50%, 50% 100%, 15% 50%)';
-    } else { // hourglass
+    } else {
       return 'polygon(20% 0%, 80% 0%, 60% 50%, 80% 100%, 20% 100%, 40% 50%)';
     }
   };
   
-  // Helper function to determine current color
   const getDisplayColor = () => {
     switch(displayColor) {
       case 'white': return 'bg-white';
@@ -202,7 +184,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
     }
   };
   
-  // Helper for glow effect
   const getGlowEffect = () => {
     if (displayColor === 'red' && !isBlinking) {
       return 'animate-red-glow-pulse';
@@ -215,7 +196,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
   
   return (
     <div className="relative w-80 h-80">
-      {/* Outer ring and inner ring with green accents that will rotate */}
       <motion.div
         className="absolute inset-0"
         animate={{ rotate: outerRotationAngle }}
@@ -225,11 +205,8 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
           damping: 20
         }}
       >
-        {/* Outer ring */}
         <div className="absolute inset-0 rounded-full bg-omnitrix-black-800 flex items-center justify-center border-4 border-omnitrix-black-900 shadow-lg">
-          {/* Inner ring */}
           <div className="w-72 h-72 rounded-full bg-omnitrix-gray-700 flex items-center justify-center relative border-2 border-omnitrix-black-900 shadow-omnitrix-inner">
-            {/* Green accents/buttons around dial */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-omnitrix-green-400 shadow-omnitrix-glow"></div>
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-omnitrix-green-400 shadow-omnitrix-glow"></div>
             <div className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-omnitrix-green-400 shadow-omnitrix-glow"></div>
@@ -238,7 +215,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
         </div>
       </motion.div>
       
-      {/* Core of the Omnitrix - Kept separate from outer rotation */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <motion.div
           className={`w-56 h-56 bg-omnitrix-gray-800 rounded-full flex items-center justify-center cursor-pointer border-2 border-omnitrix-black-900 ${isRotating ? 'animate-rotate-snap' : ''}`}
@@ -246,12 +222,9 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
           whileTap={{ scale: 0.95 }}
         >
           {isActivated ? (
-            // Dynamic display based on current state
             <div className="relative w-48 h-48 flex items-center justify-center">
               <div className="relative w-[200px] h-[200px]">
-                {/* Black circular base with clipping */}
                 <div className="w-full h-full bg-black rounded-full flex items-center justify-center overflow-hidden">
-                  {/* Dynamic shape and color */}
                   <motion.div 
                     className={`w-[220px] h-[220px] ${getDisplayColor()} ${getGlowEffect()}`}
                     animate={{ 
@@ -281,12 +254,9 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
               </div>
             </div>
           ) : (
-            // Default inactive state (hourglass)
             <div className="relative w-48 h-48 flex items-center justify-center">
               <div className="relative w-[200px] h-[200px]">
-                {/* Black circular base with clipping */}
                 <div className="w-full h-full bg-black rounded-full flex items-center justify-center overflow-hidden">
-                  {/* Green hourglass inside */}
                   <div className="w-[220px] h-[220px] bg-omnitrix-green-400 animate-glow-pulse" style={{
                     clipPath: 'polygon(20% 0%, 80% 0%, 60% 50%, 80% 100%, 20% 100%, 40% 50%)'
                   }}></div>
@@ -297,10 +267,8 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
         </motion.div>
       </div>
       
-{/* Rotation controls - only visible when activated but not slammed */}
 {isActivated && !isSlammed && !isDeactivating && (
   <>
-    {/* Left and right arrow buttons container for mobile */}
     <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-4rem] flex gap-16 sm:hidden">
       <button 
         onClick={() => handleRotate('left')}
@@ -318,7 +286,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
       </button>
     </div>
     
-    {/* Left arrow button for desktop */}
     <button 
       onClick={() => handleRotate('left')}
       className="absolute left-[-4rem] top-1/2 -translate-y-1/2 w-12 h-12 bg-omnitrix-green-400 rounded-full flex items-center justify-center shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors hidden sm:flex"
@@ -327,7 +294,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
       <ChevronLeft className="w-8 h-8 text-black" strokeWidth={3} />
     </button>
     
-    {/* Right arrow button for desktop */}
     <button 
       onClick={() => handleRotate('right')}
       className="absolute right-[-4rem] top-1/2 -translate-y-1/2 w-12 h-12 bg-omnitrix-green-400 rounded-full flex items-center justify-center shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors hidden sm:flex"
@@ -336,7 +302,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
       <ChevronRight className="w-8 h-8 text-black" strokeWidth={3} />
     </button>
     
-    {/* Select button - positioned differently for mobile vs desktop */}
     <button 
       onClick={handleSectionSelect}
       className="absolute left-1/2 transform -translate-x-1/2 bottom-[-8rem] sm:bottom-[-4rem] bg-omnitrix-green-400 text-black px-8 py-3 rounded-full shadow-omnitrix-glow hover:bg-omnitrix-green-300 transition-colors font-bold text-lg"
@@ -346,7 +311,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
     </button>
   </>
 )}  
-      {/* Instructions */}
       {!isActivated && (
         <div className="absolute bottom-[-4rem] left-1/2 transform -translate-x-1/2 text-center">
           <p className="text-omnitrix-green-400 font-bold text-lg animate-pulse">
@@ -355,7 +319,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
         </div>
       )}
       
-      {/* Deactivation instructions */}
       {isSlammed && !isDeactivating && (
         <div className="absolute bottom-[-4rem] left-1/2 transform -translate-x-1/2 text-center">
           <p className="text-white font-bold text-lg animate-pulse">
@@ -364,7 +327,6 @@ const OmnitrixDial: React.FC<OmnitrixDialProps> = ({
         </div>
       )}
       
-      {/* During deactivation */}
       {isDeactivating && (
         <div className="absolute bottom-[-4rem] left-1/2 transform -translate-x-1/2 text-center">
           <p className="text-red-500 font-bold text-lg animate-pulse">

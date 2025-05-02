@@ -12,7 +12,7 @@ import ContactSection from './components/sections/ContactSection';
 import type { SectionType } from './types';
 
 function App() {
-  // State management
+
   const [activeSection, setActiveSection] = useState<SectionType | null>(null);
   const [isOmnitrixActive, setIsOmnitrixActive] = useState(false);
   const [isGwenActive, setIsGwenActive] = useState(false);
@@ -21,17 +21,14 @@ function App() {
   const [isRippleActive, setIsRippleActive] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
 
-  // Handle loading screen completion
   const handleLoadComplete = (): void => {
     setIsPageLoaded(true);
   };
 
-  // Section change handler
   const handleSectionChange = (section: SectionType | null) => {
     setActiveSection(section);
   };
 
-  // Activation handlers for different components
   const handleOmnitrixActivation = (active: boolean) => {
     setIsOmnitrixActive(active);
   };
@@ -44,16 +41,12 @@ function App() {
     setIsKevinActive(active);
   };
 
-  // Theme change handler
   const handleThemeChange = (theme: 'ben' | 'gwen' | 'kevin') => {
-    // Activate the ripple effect for transition
     setIsRippleActive(true);
     
-    // Short delay to allow ripple to start
     setTimeout(() => {
       setCurrentTheme(theme);
       
-      // Deactivate all other components when switching themes
       if (theme === 'ben') {
         setIsGwenActive(false);
         setIsKevinActive(false);
@@ -65,17 +58,14 @@ function App() {
         setIsGwenActive(false);
       }
       
-      // Reset active section
       setActiveSection(null);
     }, 300);
 
-    // Remove the ripple after transition completes
     setTimeout(() => {
       setIsRippleActive(false);
     }, 1800);
   };
 
-  // Render appropriate section based on active selection
   const renderSection = () => {
     if ((!isOmnitrixActive && !isGwenActive && !isKevinActive) || !activeSection) return null;
 
@@ -135,7 +125,6 @@ function App() {
     }
   };
 
-  // Get theme-specific background classes
   const getThemeBackgroundClass = () => {
     switch (currentTheme) {
       case 'ben':
@@ -151,13 +140,10 @@ function App() {
 
   return (
     <>
-      {/* Loading Screen */}
       <LoadingScreen onLoadComplete={handleLoadComplete} />
       
-      {/* Main App - Only rendered when loading is complete */}
       {isPageLoaded && (
         <div className={`min-h-screen w-full ${getThemeBackgroundClass()} flex flex-col items-center relative overflow-hidden`}>
-          {/* Theme transition ripple effect */}
           <div 
             className={`
               ${currentTheme === 'ben' ? 'ben-activation-ripple' : ''}
@@ -167,7 +153,6 @@ function App() {
             `}
           ></div>
           
-          {/* Background Effects based on theme */}
           {currentTheme === 'ben' && (
             <div className="ben-background">
               <div className={`ben-energy ${isOmnitrixActive ? 'active' : ''}`}></div>
@@ -175,7 +160,6 @@ function App() {
               <div className="ben-hologram"></div>
               <div className="ben-tech-circuit"></div>
               <div className="ben-tech-pulse"></div>
-              {/* Dynamic particles */}
               {Array.from({ length: 20 }).map((_, i) => (
                 <div 
                   key={i}
@@ -188,7 +172,6 @@ function App() {
                   }}
                 ></div>
               ))}
-              {/* Hexagonal grid cells */}
               {Array.from({ length: 15 }).map((_, i) => (
                 <div 
                   key={`hex-${i}`}
@@ -200,7 +183,6 @@ function App() {
                   }}
                 ></div>
               ))}
-              {/* Tech lines */}
               {Array.from({ length: 8 }).map((_, i) => (
                 <div 
                   key={`line-${i}`}
@@ -225,7 +207,6 @@ function App() {
               <div className="gwen-mana-swirl"></div>
               <div className="gwen-mana-swirl"></div>
               <div className="gwen-mana-swirl"></div>
-              {/* Dynamic particles */}
               {Array.from({ length: 20 }).map((_, i) => (
                 <div 
                   key={i}
@@ -248,10 +229,8 @@ function App() {
               <div className="kevin-electricity"></div>
               <div className="kevin-electricity"></div>
               
-              {/* Metal texture overlay */}
               <div className="kevin-texture-overlay"></div>
               
-              {/* Texture-specific backgrounds that change with section selection */}
               <div 
                 className={`kevin-background-diamond ${
                   isKevinActive && activeSection === 'about' ? 'active' : ''
@@ -273,7 +252,6 @@ function App() {
                 }`}
               ></div>
               
-              {/* Dynamic particles - Kevin's energy particles */}
               {Array.from({ length: 15 }).map((_, i) => (
                 <div 
                   key={i}
@@ -287,7 +265,6 @@ function App() {
                 ></div>
               ))}
               
-              {/* Cracks in surface */}
               {Array.from({ length: 6 }).map((_, i) => (
                 <div 
                   key={`crack-${i}`}
@@ -301,7 +278,6 @@ function App() {
                 ></div>
               ))}
               
-              {/* Extra metallic texture particles */}
               {Array.from({ length: 10 }).map((_, i) => (
                 <div 
                   key={`metal-particle-${i}`}
@@ -314,15 +290,12 @@ function App() {
                 ></div>
               ))}
               
-              {/* Kevin's energy glow effect */}
               <div className={`kevin-energy-glow ${isKevinActive ? 'active' : ''}`}></div>
             </div>
           )}
           
-          {/* Theme Switcher */}
           <ThemeSwitcher onThemeChange={handleThemeChange} currentTheme={currentTheme} />
           
-          {/* Header with theme-specific logo */}
           <header className="w-full py-6 px-4 text-center relative z-10">
             <div className="max-w-[600px] mx-auto">
               {currentTheme === 'ben' && (
@@ -354,10 +327,8 @@ function App() {
             </div>
           </header>
           
-          {/* Main content */}
           <main className="flex-1 w-full flex flex-col items-center justify-start pt-8 pb-20 px-4 relative z-10">
             <div className="mb-12">
-              {/* Render appropriate dial based on theme */}
               {currentTheme === 'ben' && (
                 <OmnitrixDial 
                   onSectionChange={handleSectionChange}
@@ -388,7 +359,6 @@ function App() {
               )}
             </div>
             
-            {/* Content section with animations */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={`${activeSection}-${currentTheme}`}
@@ -403,7 +373,6 @@ function App() {
             </AnimatePresence>
           </main>
           
-          {/* Footer */}
           <footer className="w-full py-4 text-center relative z-10">
             <p 
               className={`text-sm ${
