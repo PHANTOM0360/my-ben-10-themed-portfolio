@@ -211,7 +211,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
           </AnimatePresence>
         </div>
       ) : (
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-col gap-2">
           <motion.button
             className={`theme-switcher-btn rounded-full flex items-center justify-center p-2
                       ${currentTheme === 'ben' ? getButtonStyle('ben') : 'bg-gray-600'}`}
@@ -270,22 +270,22 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange, currentThe
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-                                <div className="relative w-6 h-6">
-                    {currentTheme === 'kevin' && (
-                      <div className="absolute -inset-1 rounded-full shadow-kevin-glow opacity-70 z-0"></div>
-                    )}
-                    <div className="absolute inset-0 rounded-full z-10"
-                         style={{ 
-                           background: 'linear-gradient(135deg, #333333, #666666)',
-                           boxShadow: 'inset 0 0 3px rgba(0,0,0,0.7)'
-                         }}>
-                      <div className="absolute inset-0 flex items-center justify-center text-white font-bold" 
-                           style={{ fontSize: '10px' }}>
-                        <span className="kevin-11-text">11</span>
-                      </div>
-                      <div className="absolute inset-0 rounded-full border border-gray-500 opacity-60"></div>
-                    </div>
+              <div className="relative w-6 h-6">
+                {currentTheme === 'kevin' && (
+                  <div className="absolute -inset-1 rounded-full shadow-kevin-glow opacity-70 z-0"></div>
+                )}
+                <div className="absolute inset-0 rounded-full z-10"
+                     style={{ 
+                       background: 'linear-gradient(135deg, #333333, #666666)',
+                       boxShadow: 'inset 0 0 3px rgba(0,0,0,0.7)'
+                     }}>
+                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold" 
+                       style={{ fontSize: '10px' }}>
+                    <span className="kevin-11-text">11</span>
                   </div>
+                  <div className="absolute inset-0 rounded-full border border-gray-500 opacity-60"></div>
+                </div>
+              </div>
               <span>KEVIN</span>
             </motion.div>
           </motion.button>
