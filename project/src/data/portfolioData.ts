@@ -6,7 +6,7 @@ export const portfolioData: PortfolioData = {
     name: 'Arkaprava Chowdhury',
     title: 'Web Developer & Designer',
     bio: 'I am a creative developer skilled in building sleek, responsive web apps with React, JavaScript, and Tailwind. I blend design and code, backed by experience in Node.js, Python, and tools like Figma and Framer. I love crafting clean interfaces and smooth user experiences.',
-    imageUrl: '/images/profile.webp',
+    imageUrl: '/images/profile_1.webp',
     resumeUrl: '/files/arkaprava_chowdhury_resume.pdf',
   },
   projects: [
