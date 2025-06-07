@@ -300,7 +300,7 @@ function App() {
             <div className="max-w-[600px] mx-auto">
               {currentTheme === 'ben' && (
                 <img 
-                  src="/images/ARKAPRAVA-CHOWDHURY-4-24-2025.png" 
+                  src="/images/ARKAPRAVA-CHOWDHURY-4-24-2025.webp" 
                   alt="Arkaprava Chowdhury - Ben Theme" 
                   className="w-full h-auto"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(20, 219, 0, 0.7))' }}
@@ -309,7 +309,7 @@ function App() {
               
               {currentTheme === 'gwen' && (
                 <img 
-                  src="/images/gwen chowdhury.png" 
+                  src="/images/gwen chowdhury.webp" 
                   alt="Arkaprava Chowdhury - Gwen Theme" 
                   className="w-full h-auto"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(255, 69, 160, 0.7))' }}
@@ -318,7 +318,7 @@ function App() {
               
               {currentTheme === 'kevin' && (
                 <img 
-                  src="/images/kevin chowdhury.png" 
+                  src="/images/kevin chowdhury.webp" 
                   alt="Arkaprava Chowdhury - Kevin Theme" 
                   className="w-full h-auto"
                   style={{ filter: 'drop-shadow(0 0 10px rgba(120, 120, 120, 0.8))' }}
