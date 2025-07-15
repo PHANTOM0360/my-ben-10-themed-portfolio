@@ -10,7 +10,7 @@ import ProjectsSection from './components/sections/ProjectsSection';
 import SkillsSection from './components/sections/SkillsSection';
 import ContactSection from './components/sections/ContactSection';
 import type { SectionType } from './types';
-
+import { Analytics } from "@vercel/analytics/react"
 function App() {
 
   const [activeSection, setActiveSection] = useState<SectionType | null>(null);
@@ -384,9 +384,12 @@ function App() {
               © {new Date().getFullYear()} - Arkaprava Chowdhury
             </p>
           </footer>
+          <Analytics/>
         </div>
+        
       )}
     </>
+    
   );
 }
 
